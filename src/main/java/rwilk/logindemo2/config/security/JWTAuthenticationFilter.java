@@ -1,4 +1,4 @@
-package rwilk.logindemo2.security;
+package rwilk.logindemo2.config.security;
 
 import java.io.IOException;
 import java.time.ZoneOffset;
@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,12 +23,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import rwilk.logindemo2.model.ApplicationUser;
+import rwilk.logindemo2.model.JWTUser;
 
-import static rwilk.logindemo2.security.SecurityConstants.EXPIRATION_TIME;
-import static rwilk.logindemo2.security.SecurityConstants.HEADER_STRING;
-import static rwilk.logindemo2.security.SecurityConstants.SECRET;
-import static rwilk.logindemo2.security.SecurityConstants.TOKEN_PREFIX;
+import static rwilk.logindemo2.config.security.SecurityConstants.HEADER_STRING;
+import static rwilk.logindemo2.config.security.SecurityConstants.SECRET;
+import static rwilk.logindemo2.config.security.SecurityConstants.TOKEN_PREFIX;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -43,9 +41,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
   @Override
   public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
     try {
-      ApplicationUser applicationUser = new ObjectMapper().readValue(request.getInputStream(), ApplicationUser.class);
+      JWTUser JWTUser = new ObjectMapper().readValue(request.getInputStream(), JWTUser.class);
       return authenticationManager.authenticate(
-          new UsernamePasswordAuthenticationToken(applicationUser.getUsername(), applicationUser.getPassword()));
+          new UsernamePasswordAuthenticationToken(JWTUser.getUsername(), JWTUser.getPassword()));
     } catch (IOException e) {
       e.printStackTrace();
       throw new RuntimeException(e);

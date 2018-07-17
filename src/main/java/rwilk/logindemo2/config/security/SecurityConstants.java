@@ -1,4 +1,4 @@
-package rwilk.logindemo2.security;
+package rwilk.logindemo2.config.security;
 
 public class SecurityConstants {
 

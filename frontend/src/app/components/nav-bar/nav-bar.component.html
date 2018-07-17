@@ -1,0 +1,39 @@
+<!--<nav class="navbar navbar-dark bg-primary align-content-sm-center">
+  <div>
+    <a class="navbar-brand" href="/home">
+      <img width="30" height="30" class="d-inline-block align-top" alt="" src="../../../assets/icon-home.svg">
+      Home Budget
+    </a>
+  </div>
+
+  <div>
+    <a class="navbar-brand" routerLink="/register" routerLinkActive="active" (click)="onClick()">{{loginService.checkLogin()? '' :
+      'Register'}}</a>
+    <a class="navbar-brand" routerLink="/login" routerLinkActive="active" (click)="onClick()">{{loginService.checkLogin()? 'Logout' :
+      'Login'}}</a>
+  </div>
+</nav>-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<mat-toolbar class="mat-toolbar-main" color="primary">
+  <button mat-button class="mat-button-with-icon" routerLink="/home">
+    <mat-icon class="mat-icon mat-icon-margin" role="img" aria-hidden="true">home</mat-icon>
+    Home
+  </button>
+
+  <span class="example-fill-remaining-space"></span>
+
+  <div>
+    <a routerLink="/login" routerLinkActive="active" (click)="onClick()" class="router-link-align-right"><b>{{loginService.checkLogin()? 'Sign Out' :
+      'Sign in'}}</b></a>
+    <ng-container *ngIf="!loginService.checkLogin()">
+      or
+      <a routerLink="/register" routerLinkActive="active" class="router-link-align-right"><b>Sign up</b></a>
+    </ng-container>
+  </div>
+
+  <!--<span>Application Title</span>-->
+  <!-- This fills the remaining space of the current row -->
+  <!-- <span class="example-fill-remaining-space"></span>
+   <span>Right Aligned Text</span>-->
+  <!--<mat-icon>home</mat-icon>-->
+</mat-toolbar>

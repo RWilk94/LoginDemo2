@@ -1,0 +1,48 @@
+#registration-div {
+  /*display: table;*/
+  margin: 0 auto;
+  text-align: center;
+}
+
+#row-div {
+  margin: fill;
+}
+
+@media screen and (max-width: 576px) {
+  /*.form-control {
+    width: 100%;
+  }
+  #row-div {
+    margin: fill;
+  }*/
+}
+
+@media screen and (min-width: 577px) and (max-width: 768px) {
+  /*#form-first-name {
+    min-width: 500px;
+  }
+  #form-last-name {
+    min-width: 500px;
+  }*/
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+  /*#main {
+    background-color: blue;
+  }*/
+  /*.form-control {
+    width: 400px;
+  }*/
+}
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+  /*#main {
+    background-color: green;
+  }*/
+}
+
+@media screen and (min-width: 1201px) {
+  /*#main {
+    background-color: red;
+  }*/
+}

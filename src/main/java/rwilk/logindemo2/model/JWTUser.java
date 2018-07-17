@@ -1,13 +1,13 @@
 package rwilk.logindemo2.model;
 
-public class ApplicationUser {
+public class JWTUser {
 
   private String username;
   private String password;
 
-  public ApplicationUser(){}
+  public JWTUser(){}
 
-  public ApplicationUser(String username, String password) {
+  public JWTUser(String username, String password) {
     this.username = username;
     this.password = password;
   }
