@@ -1,5 +1,5 @@
 <div class="container">
-  <div id="registration-div" class="col-sm-5 form-box">
+  <div *ngIf="!loginService.checkLogin()" id="registration-div" class="col-sm-5 form-box">
     <div class="form-bottom">
       <div class="form-bottom">
         <form role="form" #registerForm="ngForm" (ngSubmit)="signIn()">
@@ -19,6 +19,6 @@
   <div *ngIf="loginService.checkLogin()">
     <h3>Logged In Successfully! </h3>
     <h2>Welcome back, {{currentUserName}}!</h2>
-    <button type="button" class="btn btn-dark" (click)="loginService.logout()">Logout</button>
+    <button type="button" class="btn btn-dark" (click)="LoginService.logout()">Logout</button>
   </div>
 </div>

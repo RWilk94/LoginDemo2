@@ -24,7 +24,7 @@ export class LoginService {
     return this.http.get(url, {headers: header});
   }
 
-  logout() {
+  static logout() {
     // localStorage.setItem("token", "");
     // localStorage.setItem("currentUsername", '');
     Cookie.delete('token');
@@ -34,6 +34,11 @@ export class LoginService {
 
   checkLogin() {
     return Cookie.get('username') != null && Cookie.get('username') != '' && Cookie.get('token') != null && Cookie.get('token') != ''
+  }
+
+  getUsername() {
+    console.log(Cookie.get('username'));
+    return Cookie.get('username');
   }
 
   /*sendCredential(model){

@@ -22,8 +22,13 @@
 
   <span class="example-fill-remaining-space"></span>
 
+  <div *ngIf="loginService.checkLogin()" class="username" (click)="editProfileOnClick()">
+    Welcome {{loginService.getUsername()}}
+  </div>
+
   <div>
-    <a routerLink="/login" routerLinkActive="active" (click)="onClick()" class="router-link-align-right"><b>{{loginService.checkLogin()? 'Sign Out' :
+    <a routerLink="/login" routerLinkActive="active" (click)="onClick()" class="router-link-align-right"><b>{{loginService.checkLogin()?
+      'Sign Out' :
       'Sign in'}}</b></a>
     <ng-container *ngIf="!loginService.checkLogin()">
       or

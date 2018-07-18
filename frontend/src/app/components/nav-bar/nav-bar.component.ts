@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LoginService} from "../../services/login.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,15 +9,20 @@ import {LoginService} from "../../services/login.service";
 })
 export class NavBarComponent implements OnInit {
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService, private router: Router) {
+  }
 
   ngOnInit() {
   }
 
   onClick() {
     if (this.loginService.checkLogin()) {
-      this.loginService.logout();
+      LoginService.logout();
     }
+  }
+
+  editProfileOnClick() {
+    this.router.navigate(['/profile']);
   }
 
 }

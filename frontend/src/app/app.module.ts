@@ -15,6 +15,8 @@ import {HttpModule} from "@angular/http";
 import {TestService} from "./services/test.service";
 import {MatIconModule, MatToolbarModule} from "@angular/material";
 import {FlexLayoutModule} from "@angular/flex-layout";
+import {ProfileComponent} from './components/profile/profile.component';
+import {UserService} from "./services/user.service";
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import {FlexLayoutModule} from "@angular/flex-layout";
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    NavBarComponent
+    NavBarComponent,
+    ProfileComponent
   ],
   imports: [
     AppRoutingModule,
@@ -37,7 +40,8 @@ import {FlexLayoutModule} from "@angular/flex-layout";
   providers: [
     LoginService,
     RegisterService,
-    TestService],
+    TestService,
+    UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

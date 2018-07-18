@@ -30,6 +30,11 @@
   flex: 1 1 auto;
 }
 
+.username:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 /*.sign-up {
   border-radius: 1px;
   border: 1px solid white;

@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {LoginService} from "../../services/login.service";
-import { Cookie } from 'ng2-cookies/ng2-cookies';
+import {Cookie} from 'ng2-cookies/ng2-cookies';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent {
   public token = {'token': ''};
   currentUserName;
 
-  constructor(public loginService: LoginService) {
+  constructor(public loginService: LoginService, private router: Router) {
     // this.currentUserName = localStorage.getItem("username");
     this.currentUserName = Cookie.get('username');
   }
@@ -27,8 +28,10 @@ export class LoginComponent {
             // localStorage.setItem('username', this.model.username);
             Cookie.set('token', this.token.token);
             Cookie.set('username', this.model.username);
+            this.currentUserName = this.model.username;
             this.model.username = '';
             this.model.password = '';
+            this.router.navigate(['/home']);
           },
           error1 => console.log(error1));
       },
