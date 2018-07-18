@@ -1,5 +1,6 @@
 package rwilk.logindemo2.endpoint;
 
+import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,9 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class FirstFloorEndpoint {
 
   @GetMapping("office1")
+  @PreAuthorize("hasAnyRole('USER')")
   public ResponseEntity<?> enterOffice1() {
     System.out.println(SecurityContextHolder.getContext().getAuthentication());
-    return new ResponseEntity<>("You are inside office1", HttpStatus.OK);
+
+    JSONObject jsonObject = new JSONObject();
+    jsonObject.put("data", "You are inside office1");
+
+    return new ResponseEntity<>(jsonObject, HttpStatus.OK);
   }
 
   @GetMapping("office2")

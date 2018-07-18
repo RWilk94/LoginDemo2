@@ -13,23 +13,23 @@ import rwilk.logindemo2.service.CustomUserDetailsService;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final CustomUserDetailsService customUserDetailsService;
+  private final CustomUserDetailsService customUserDetailsService;
 
-    @Autowired
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
-        this.customUserDetailsService = customUserDetailsService;
-    }
+  @Autowired
+  public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
+    this.customUserDetailsService = customUserDetailsService;
+  }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/sign_up").permitAll()
-                .antMatchers(HttpMethod.POST, "/login").permitAll()
-                .antMatchers("/*floor1/**").hasRole("USER")
-                .antMatchers("/*floor2/**").hasRole("ADMIN")
-                .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager(), customUserDetailsService));
-        //.httpBasic();
-    }
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.cors().and().csrf().disable().authorizeRequests()
+        //.antMatchers(HttpMethod.POST, "/sign_up").permitAll()
+        .antMatchers(HttpMethod.POST, "/login").permitAll()
+        .antMatchers("/*floor1/**").hasRole("USER")
+        .antMatchers("/*floor2/**").hasRole("ADMIN")
+        .and()
+        .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+        .addFilter(new JWTAuthorizationFilter(authenticationManager(), customUserDetailsService));
+    //.httpBasic();
+  }
 }

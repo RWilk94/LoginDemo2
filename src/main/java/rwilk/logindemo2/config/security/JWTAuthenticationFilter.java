@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +26,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import rwilk.logindemo2.model.JWTUser;
 
+import static rwilk.logindemo2.config.security.SecurityConstants.EXPIRATION_TIME;
 import static rwilk.logindemo2.config.security.SecurityConstants.HEADER_STRING;
 import static rwilk.logindemo2.config.security.SecurityConstants.SECRET;
 import static rwilk.logindemo2.config.security.SecurityConstants.TOKEN_PREFIX;
@@ -56,12 +58,18 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
       FilterChain chain,
       Authentication authResult) throws IOException, ServletException {
 
-    ZonedDateTime expirationTimeUTC = ZonedDateTime.now(ZoneOffset.UTC).plus(100, ChronoUnit.SECONDS); //EXPIRATION_TIME, ChronoUnit.MILLIS);
+    ZonedDateTime expirationTimeUTC =
+        ZonedDateTime.now(ZoneOffset.UTC).plus(EXPIRATION_TIME, ChronoUnit.SECONDS); //EXPIRATION_TIME, ChronoUnit.MILLIS);
     String token = Jwts.builder().setSubject(((User) authResult.getPrincipal()).getUsername())
         .setExpiration(Date.from(expirationTimeUTC.toInstant()))
         .signWith(SignatureAlgorithm.HS256, SECRET)
         .compact();
-    response.getWriter().write(token);
+
+    System.out.println(token);
+    JSONObject jsonObject = new JSONObject();
+    jsonObject.put("token", token);
+
+    response.getWriter().write(jsonObject.toJSONString());
     response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
   }
 }
