@@ -33,6 +33,14 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserByUsername(username), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/user", method = RequestMethod.PUT)
+    public ResponseEntity<User> updateUser(@RequestBody User user) {
+        if (user == null) {
+            throw new RuntimeException("Empty user :(");
+        }
+        return new ResponseEntity<>(userService.updateUser(user), HttpStatus.OK);
+    }
+
     /*@RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<String> login(@RequestBody JWTUser jwtUser) {
 

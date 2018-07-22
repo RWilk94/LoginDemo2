@@ -28,4 +28,11 @@ public class UserServiceImpl implements UserService {
     public List<User> findAllUsers() {
         return userRepository.findAll();
     }
+
+    @Override
+    public User updateUser(User user) {
+        Long userId = this.getUserByUsername(user.getUsername()).getUserId();
+        user.setUserId(userId);
+        return userRepository.save(user);
+    }
 }

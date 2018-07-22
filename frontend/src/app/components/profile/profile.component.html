@@ -11,34 +11,34 @@
       </div>
     </div>
     <div class="form-bottom">
-      <form role="form" #registerForm="ngForm" (ngSubmit)="onSubmit()">
+      <form role="form" #registerForm="ngForm" (ngSubmit)="onUpdateUser()">
         <div class="row" id="row-div">
           <div class="col-sm-6" id="div-6-sm">
             <div class="form-group">
               <input type="text" name="form-horizontal-input" placeholder="First Name..." class="form-control"
                      id="form-first-name"
-                     [(ngModel)]="newUser.firstName" ngControl="firstName" required>
+                     [(ngModel)]="currentUser.firstName" ngControl="firstName" required>
             </div>
           </div>
           <div class="col-sm-6">
             <div class="form-group">
               <input type="text" name="form-horizontal-input" placeholder="Last Name..." class="form-control"
                      id="form-last-name"
-                     [(ngModel)]="newUser.lastName" ngControl="lastName" required>
+                     [(ngModel)]="currentUser.lastName" ngControl="lastName" required>
             </div>
           </div>
         </div>
         <div class="form-group">
           <input type="text" name="form-username" placeholder="Username..." class="form-control" id="form-username"
-                 [(ngModel)]="newUser.username" ngControl="username" required>
+                 [(ngModel)]="currentUser.username" ngControl="username" required>
         </div>
         <div class="form-group">
           <input type="text" name="form-email" placeholder="Email..." class="form-control" id="form-email"
-                 [(ngModel)]="newUser.email" ngControl="email" required>
+                 [(ngModel)]="currentUser.email" ngControl="email" required>
         </div>
         <div class="form-group">
           <input type="password" name="form-password" placeholder="Password..." class="form-control" id="form-password"
-                 [(ngModel)]="newUser.password" ngControl="password" required>
+                 [(ngModel)]="currentUser.password" ngControl="password" required>
         </div>
         <div class="form-group">
           <input type="password" name="form-re-password" placeholder="Confirm password..." class="form-control"
