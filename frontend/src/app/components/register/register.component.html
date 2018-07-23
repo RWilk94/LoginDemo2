@@ -1,56 +1,67 @@
-<div id="main">
+<div class="container">
 
-  <div *ngIf="!registered" id="registration-div" class="col-sm-5 form-box">
-    <div class="form-top">
-      <div class="form-top-left">
-        <h3>Sign up now</h3>
-        <p>Fill in the form below to get instant access:</p>
-      </div>
-      <div class="form-top-right">
-        <i class="fa fa-pencil"></i>
+  <h1>Registration Form</h1>
+
+  <form [formGroup]="form" #registerForm="ngForm">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" class="form-control" id="username"
+             formControlName="username"
+             name="username" >
+      <div class="alert alert-danger">
+        <div *ngIf="!form.controls.username.valid">
+          Username is required!
+        </div>
+        <div>
+          Username must be at least 3 characters long.
+        </div>
+        <div>
+          Username cannot be more than 20 characters long.
+        </div>
       </div>
     </div>
-    <div class="form-bottom">
-      <form role="form" #registerForm="ngForm" (ngSubmit)="onSubmit()">
-        <div class="row" id="row-div">
-          <div class="col-sm-6" id="div-6-sm">
-            <div class="form-group">
-              <input type="text" name="form-horizontal-input" placeholder="First Name..." class="form-control"
-                     id="form-first-name"
-                     [(ngModel)]="newUser.firstName" ngControl="firstName" required>
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="form-group">
-              <input type="text" name="form-horizontal-input" placeholder="Last Name..." class="form-control"
-                     id="form-last-name"
-                     [(ngModel)]="newUser.lastName" ngControl="lastName" required>
-            </div>
-          </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="text" class="form-control" id="email"
+             formControlName="email"
+             required
+             name="email">
+      <div class="alert alert-danger">
+        <div>
+          Email is required!
         </div>
-        <div class="form-group">
-          <input type="text" name="form-username" placeholder="Username..." class="form-control" id="form-username"
-                 [(ngModel)]="newUser.username" ngControl="username" required>
-        </div>
-        <div class="form-group">
-          <input type="text" name="form-email" placeholder="Email..." class="form-control" id="form-email"
-                 [(ngModel)]="newUser.email" ngControl="email" required>
-        </div>
-        <div class="form-group">
-          <input type="password" name="form-password" placeholder="Password..." class="form-control" id="form-password"
-                 [(ngModel)]="newUser.password" ngControl="password" required>
-        </div>
-        <div class="form-group">
-          <input type="password" name="form-re-password" placeholder="Confirm password..." class="form-control"
-                 id="form-confirm-password" ngControl="re-password" required>
-        </div>
-        <button type="submit" class="btn btn-success" [disabled]="!registerForm.form.valid">Register</button>
-      </form>
+      </div>
     </div>
-  </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password"
+             formControlName="password"
+             required
+             name="password">
+      <div class="alert alert-danger">
+        <div>
+          Password is required!
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="rePassword">Password</label>
+      <input type="password" class="form-control" id="rePassword"
+             formControlName="rePassword"
+             required
+             name="rePassword">
+      <div class="alert alert-danger">
+        <div>
+          Re-Password is required!
+        </div>
+      </div>
+    </div>
+    <button type="submit" (click)="onSubmit()" class="btn btn-default">Submit</button>
+  </form>
 
-  <div *ngIf="registered">
-    <h1>Register Success!</h1>
+  <hr/>
+  <div>
+    <h2>Model:</h2>
+    {{newUser | json}}
   </div>
-
 </div>

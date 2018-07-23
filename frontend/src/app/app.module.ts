@@ -8,7 +8,7 @@ import {RegisterComponent} from './components/register/register.component';
 import {NavBarComponent} from './components/nav-bar/nav-bar.component';
 import {LoginService} from "./services/login.service";
 import {RegisterService} from "./services/register.service";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {AppRoutingModule} from "./app-routing.module";
 import {HttpModule} from "@angular/http";
@@ -17,6 +17,7 @@ import {MatIconModule, MatToolbarModule} from "@angular/material";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {ProfileComponent} from './components/profile/profile.component';
 import {UserService} from "./services/user.service";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,9 @@ import {UserService} from "./services/user.service";
     HttpClientModule,
     MatToolbarModule,
     MatIconModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ReactiveFormsModule,
+    CommonModule
   ],
   providers: [
     LoginService,
