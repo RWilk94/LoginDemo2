@@ -12,6 +12,8 @@ import rwilk.logindemo2.service.UserService;
 
 import java.util.Map;
 
+import javax.validation.Valid;
+
 @RestController
 public class UserController {
 
@@ -19,7 +21,7 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public User registerUser(@RequestBody User user) {
+    public User registerUser(@Valid @RequestBody User user) {
         return userService.registerUser(user);
     }
 

@@ -54,7 +54,7 @@ export class LoginComponent {
             this.model.username = '';
             this.model.password = '';
           },
-          error => console.log(error)
+          exception => console.log(exception)
         );
       },
       error1 => console.log(error1)
