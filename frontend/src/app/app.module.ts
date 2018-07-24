@@ -32,6 +32,7 @@ import {CommonModule} from "@angular/common";
     AppRoutingModule,
     BrowserModule,
     FormsModule,
+    //ReactiveFormsModule,
     HttpModule,
     HttpClientModule,
     MatToolbarModule,
