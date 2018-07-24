@@ -1,5 +1,6 @@
 package rwilk.logindemo2.rest.exception;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
   }
 
-  @ExceptionHandler
+  /*@ExceptionHandler
   public ResponseEntity<UserErrorResponse> handleInvalidUserDataException(RuntimeException exception) {
 
     UserErrorResponse errorResponse = new UserErrorResponse();
@@ -35,7 +36,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     errorResponse.setTimeStamp(System.currentTimeMillis());
 
     return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-  }
+  }*/
 
   @Override
   protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
@@ -50,4 +51,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
   }
 
+  @ExceptionHandler
+  public ResponseEntity<Object> handleSQLIntegrityConstraintViolationException(ConstraintViolationException exception) {
+
+    UserErrorResponse errorResponse = new UserErrorResponse();
+    errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+    errorResponse.setMessage("Invalid SQL parameters. Duplicated records. Could not execute statement");
+    errorResponse.setTimeStamp(System.currentTimeMillis());
+    errorResponse.setDetails(exception.getMessage());
+
+    return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+  }
 }
