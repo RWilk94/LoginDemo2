@@ -30,6 +30,7 @@
       <input type="text" class="form-control" id="email"
              formControlName="email"
              required
+             maxlength="256"
              name="email">
       <div class="alert alert-danger"
            *ngIf="form.controls.email.invalid && (form.controls.email.dirty || form.controls.email.touched)">

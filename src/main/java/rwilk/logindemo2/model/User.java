@@ -35,17 +35,21 @@ public class User implements Serializable {
   @Column(unique = true)
   private String username;
 
+  @Size(max = 256)
   @Email(message = "The email address has an invalid format.")
   @NotNull
   @Column(unique = true)
   private String email;
 
   @NotNull
-  @Size(min = 6, max = 20)
+  @Size(min = 6)
   private String password;
 
   @Transient
   private String confirmPassword;
+
+  @Transient
+  private String oldPassword;
 
   @CreationTimestamp
   private Date created;

@@ -13,6 +13,7 @@ export class RegisterComponent implements OnInit {
 
   user: User;
   form: FormGroup;
+
   //registered: boolean = false;
 
   constructor(private registerService: RegisterService, private formBuilder: FormBuilder) {
@@ -47,6 +48,7 @@ export class RegisterComponent implements OnInit {
         usernameValidator]),
       email: new FormControl(this.user.email, [
         Validators.required,
+        Validators.maxLength(256),
         emailValidator]),
       password: new FormControl(this.user.password, [
         Validators.required,

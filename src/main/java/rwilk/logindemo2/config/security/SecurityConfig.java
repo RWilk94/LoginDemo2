@@ -7,17 +7,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import rwilk.logindemo2.service.CustomUserDetailsService;
+import rwilk.logindemo2.service.IUserService;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  private final CustomUserDetailsService customUserDetailsService;
+  private final IUserService IUserService;
 
   @Autowired
-  public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
-    this.customUserDetailsService = customUserDetailsService;
+  public SecurityConfig(IUserService IUserService) {
+    this.IUserService = IUserService;
   }
 
   @Override
@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/*floor2/**").hasRole("ADMIN")
         .and()
         .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-        .addFilter(new JWTAuthorizationFilter(authenticationManager(), customUserDetailsService));
+        .addFilter(new JWTAuthorizationFilter(authenticationManager(), IUserService));
     //.httpBasic();
   }
 }

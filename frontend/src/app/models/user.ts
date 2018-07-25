@@ -5,5 +5,6 @@ export class User {
   public email: string;
   public password: string;
   public confirmPassword: string;
+  public oldPassword: string;
   public created: Date;
 }

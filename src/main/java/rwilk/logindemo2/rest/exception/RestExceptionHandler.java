@@ -16,6 +16,32 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
+  @Override
+  protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
+      HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+    UserErrorResponse errorResponse = new UserErrorResponse();
+    errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+    errorResponse.setMessage("Validation Failed");
+    errorResponse.setTimeStamp(System.currentTimeMillis());
+    errorResponse.setDetails(exception.getBindingResult().toString());
+
+    return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler
+  public ResponseEntity<UserErrorResponse> handleDifferentPasswordAndConfirmPasswordException(
+      DifferentPasswordAndConfirmPasswordException exception) {
+
+    UserErrorResponse errorResponse = new UserErrorResponse();
+    errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+    errorResponse.setMessage("Password and confirm password are different.");
+    errorResponse.setDetails(exception.getMessage());
+    errorResponse.setTimeStamp(System.currentTimeMillis());
+
+    return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+  }
+
   @ExceptionHandler
   public ResponseEntity<UserErrorResponse> handleUserNotFoundException(UserNotFoundException exception) {
 
@@ -37,19 +63,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
   }*/
-
-  @Override
-  protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
-      HttpHeaders headers, HttpStatus status, WebRequest request) {
-
-    UserErrorResponse errorResponse = new UserErrorResponse();
-    errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-    errorResponse.setMessage("Validation Failed");
-    errorResponse.setTimeStamp(System.currentTimeMillis());
-    errorResponse.setDetails(exception.getBindingResult().toString());
-
-    return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-  }
 
   @ExceptionHandler
   public ResponseEntity<Object> handleSQLIntegrityConstraintViolationException(ConstraintViolationException exception) {
