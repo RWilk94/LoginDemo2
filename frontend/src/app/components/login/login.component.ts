@@ -23,7 +23,7 @@ export class LoginComponent {
     this.loginService.signIn(this.model).subscribe(data => {
         this.token = JSON.parse(JSON.stringify(data));
 
-        this.loginService.sendVerificationToken(this.token.token, this.model.username).subscribe(data => {
+        this.loginService.checkVerificationToken(this.token.token, this.model.username).subscribe(data => {
             // localStorage.setItem('token', this.token.token);
             // localStorage.setItem('username', this.model.username);
             Cookie.set('token', this.token.token);

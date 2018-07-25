@@ -42,7 +42,7 @@ public class User implements Serializable {
   private String email;
 
   @NotNull
-  @Size(min = 6)
+  @Size(min = 6, max = 256)
   private String password;
 
   @Transient

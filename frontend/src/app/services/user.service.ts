@@ -17,9 +17,6 @@ export class UserService {
     let url = 'http://localhost:8080/user';
     let header = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + Cookie.get('token')});
     return this.http.post<User>(url, model, {headers: header});
-    // let url = 'http://localhost:8080/v1/floor1/office1';
-    //let header = new HttpHeaders({'Authorization': 'Bearer ' + token});
-    //return this.http.get(url, {headers: header});
   }
 
   updateUser(user: User) {

@@ -11,8 +11,6 @@ import {RegisterService} from "./services/register.service";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {AppRoutingModule} from "./app-routing.module";
-import {HttpModule} from "@angular/http";
-import {TestService} from "./services/test.service";
 import {MatIconModule, MatToolbarModule} from "@angular/material";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {ProfileComponent} from './components/profile/profile.component';
@@ -32,8 +30,6 @@ import {CommonModule} from "@angular/common";
     AppRoutingModule,
     BrowserModule,
     FormsModule,
-    //ReactiveFormsModule,
-    HttpModule,
     HttpClientModule,
     MatToolbarModule,
     MatIconModule,
@@ -44,7 +40,6 @@ import {CommonModule} from "@angular/common";
   providers: [
     LoginService,
     RegisterService,
-    TestService,
     UserService],
   bootstrap: [AppComponent]
 })
