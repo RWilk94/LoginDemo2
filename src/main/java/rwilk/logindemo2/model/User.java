@@ -16,12 +16,16 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import rwilk.logindemo2.validator.Email;
 import rwilk.logindemo2.validator.Username;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements Serializable {
 
   @Id

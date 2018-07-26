@@ -37,6 +37,9 @@
         <div *ngIf="form.controls.email.errors.required">
           Email is required!
         </div>
+        <div *ngIf="form.controls.email.errors.isError">
+          Email has invalid format!
+        </div>
       </div>
     </div>
     <div class="form-group">

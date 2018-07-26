@@ -1,4 +1,4 @@
-package rwilk.logindemo2.rest;
+package rwilk.logindemo2.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import rwilk.logindemo2.model.User;
+import rwilk.logindemo2.rest.exception.UserNotFoundException;
 import rwilk.logindemo2.service.IUserService;
 
 import java.util.Map;
@@ -32,7 +33,7 @@ public class UserController {
   public ResponseEntity<User> getUser(@RequestBody Map<String, String> json) {
     String username = json.get("username");
     if (username == null || username.isEmpty()) {
-      throw new RuntimeException("Empty username :(");
+      throw new UserNotFoundException("Empty username");
     }
     return new ResponseEntity<>(IUserService.getUserByUsername(username), HttpStatus.OK);
   }
@@ -40,18 +41,9 @@ public class UserController {
   @PreAuthorize("hasAnyRole('USER')")
   @RequestMapping(value = "/user", method = RequestMethod.PUT)
   public ResponseEntity<User> updateUser(@RequestBody User user) {
-    if (user == null) {
-      throw new RuntimeException("Empty user :(");
-    }
+    /*if (user == null) {
+      throw new UserNotFoundException("Empty user data");
+    }*/
     return new ResponseEntity<>(IUserService.updateUser(user), HttpStatus.OK);
   }
-
-    /*@RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<String> login(@RequestBody JWTUser jwtUser) {
-
-
-
-        return new ResponseEntity<String>("dupa", HttpStatus.OK);
-    }*/
-
 }
