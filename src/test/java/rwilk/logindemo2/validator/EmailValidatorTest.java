@@ -10,14 +10,13 @@ public class EmailValidatorTest {
   private EmailValidator emailValidator;
 
   @Before
-  public void before() {
+  public void setup() {
     emailValidator = new EmailValidator();
   }
 
   @Test
   public void isValidEmail() {
     assertTrue(emailValidator.isValid("valid@email.em", null));
-
   }
 
   @Test
