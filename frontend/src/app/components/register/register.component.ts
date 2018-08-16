@@ -26,14 +26,9 @@ export class RegisterComponent implements OnInit {
     this.user.password = this.form.get('password').value;
     this.user.confirmPassword = this.form.get('confirmPassword').value;
 
-    //console.log(this.form.get('username').value);
     console.log(this.user);
-    //console.log(this.form.controls.confirmPassword);
-    //this.form.markAsTouched();
-    //console.log(this.user.username);
     this.registerService.sendUser(this.user).subscribe(data => {
         console.log(data);
-        //this.registered = true;
         this.user = new User();
       },
       error => console.log(error));

@@ -1,0 +1,14 @@
+<mat-sidenav-container class="mat-sidenav-container">
+
+  <mat-sidenav #appDrawer class="side-nav" [mode]="'side'" [opened]="true">
+    <mat-nav-list class="mat-nav-list">
+
+      <app-menu-list-item *ngFor="let item of navItems" [item]="item"></app-menu-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="side-nav-content">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
