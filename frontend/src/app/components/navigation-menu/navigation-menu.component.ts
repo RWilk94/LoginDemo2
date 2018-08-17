@@ -15,22 +15,46 @@ export class NavigationMenuComponent implements OnInit, AfterViewInit {
 
   navItems: NavigationMenuItem[] = [
     {
-      displayName: 'FirstItem',
-      iconName: 'menu',
+      displayName: 'Home',
+      iconName: 'explore',
+      route: 'home'
+    },
+    {
+      displayName: 'Home budget',
+      iconName: 'attach_money',
       children: [
         {
-          displayName: 'Children1',
-          iconName: 'menu'
+          displayName: 'Bills',
+          iconName: 'money',
+          route: 'home'
         },
         {
-          displayName: 'Children2',
-          iconName: 'menu'
+          displayName: 'Food',
+          iconName: 'restaurant',
+          route: 'profile'
         }
       ]
     },
     {
-      displayName: 'SecondItem',
-      iconName: 'home'
+      displayName: 'Car',
+      iconName: 'drive_eta',
+      children: [
+        {
+          displayName: 'Fuel',
+          iconName: 'local_gas_station'
+        }
+      ]
+    },
+    {
+      displayName: 'Wedding',
+      iconName: 'favorite',
+      children: [
+
+      ]
+    },
+    {
+      displayName: 'Profile',
+      iconName: 'person'
     }
   ];
 

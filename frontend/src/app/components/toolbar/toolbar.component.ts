@@ -17,7 +17,7 @@ export class ToolbarComponent implements OnInit {
   ngOnInit() {
   }
 
-  onClick() {
+  logout() {
     if (this.loginService.checkLogin()) {
       LoginService.logout();
     }

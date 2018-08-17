@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NavigationMenuItem} from "../../models/navigation-menu-item";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-menu-list-item',
@@ -28,7 +29,7 @@ export class MenuListItemComponent implements OnInit {
   @Input() depth: number;
   expanded: boolean;
 
-  constructor() {
+  constructor(private router: Router) {
     this.expanded = false;
     this.depth = 0;
   }
@@ -37,6 +38,9 @@ export class MenuListItemComponent implements OnInit {
   }
 
   onItemSelected(item: NavigationMenuItem) {
+    if (!item.children || !item.children.length) {
+      this.router.navigate([item.route]);
+    }
     if (item.children && item.children.length) {
       this.expanded = !this.expanded;
     }

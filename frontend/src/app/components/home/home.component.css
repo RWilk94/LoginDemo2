@@ -1,0 +1,56 @@
+.mat-card-container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+@media only screen and (min-width: 1050px){
+  mat-card.mat-card-chart-home {
+    width: 33.3%;
+    display: inline-block;
+  }
+
+  mat-card.mat-card-chart-car {
+    width: 33.3%;
+    display: inline-block;
+  }
+
+  mat-card.mat-card-chart-wedding {
+    width: 33.3%;
+    display: inline-block;
+  }
+}
+
+@media only screen and (max-width: 1049px){
+  mat-card.mat-card-chart-home {
+    width: 50%;
+    display: inline-block;
+  }
+
+  mat-card.mat-card-chart-car {
+    width: 50%;
+    display: inline-block;
+  }
+
+  mat-card.mat-card-chart-wedding {
+    width: 100%;
+    display: inline-block;
+  }
+}
+
+@media only screen and (max-width: 749px){
+  mat-card.mat-card-chart-home {
+    width: 100%;
+    display: inline-block;
+  }
+
+  mat-card.mat-card-chart-car {
+    width: 100%;
+    display: inline-block;
+  }
+
+  mat-card.mat-card-chart-wedding {
+    width: 100%;
+    display: inline-block;
+  }
+}

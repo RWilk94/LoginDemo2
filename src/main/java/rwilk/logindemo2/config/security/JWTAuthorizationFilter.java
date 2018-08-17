@@ -52,7 +52,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         .getSubject();
 
     UserDetails userDetails = IUserService.loadUserByUsername(username);
-    JWTUser JWTUser = IUserService.loadApplicationUserByUsername(username);
-    return username != null ? new UsernamePasswordAuthenticationToken(JWTUser, null, userDetails.getAuthorities()) : null;
+    JWTUser jwtUser = IUserService.loadApplicationUserByUsername(username);
+    return username != null ? new UsernamePasswordAuthenticationToken(jwtUser, null, userDetails.getAuthorities()) : null;
   }
 }

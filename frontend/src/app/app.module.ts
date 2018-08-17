@@ -11,7 +11,7 @@ import {RegisterService} from "./services/register.service";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {AppRoutingModule} from "./app-routing.module";
-import {MatIconModule, MatListModule, MatSidenavModule, MatToolbarModule} from "@angular/material";
+import {MatCardModule, MatIconModule, MatListModule, MatMenuModule, MatSidenavModule, MatToolbarModule} from "@angular/material";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {ProfileComponent} from './components/profile/profile.component';
 import {UserService} from "./services/user.service";
@@ -42,6 +42,8 @@ import { MenuListItemComponent } from './components/menu-list-item/menu-list-ite
     MatIconModule,
     MatSidenavModule,
     MatListModule,
+    MatMenuModule,
+    MatCardModule,
 
     FlexLayoutModule,
     ReactiveFormsModule,

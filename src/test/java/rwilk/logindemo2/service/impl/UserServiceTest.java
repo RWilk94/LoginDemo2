@@ -37,20 +37,20 @@ public class UserServiceTest {
   public void setup() {
     MockitoAnnotations.initMocks(this);
     //when(userRepository.save(any(User.class))).thenReturn(any(User.class));
-    user = new User(null, "username", "email@email.com", "password", "password", null, null);
+    user = new User(null, "username", "email@email.com", "password", "password", null, null, null);
     when(userRepository.findUserByUsername("username")).thenReturn(user);
   }
 
   @Test
   public void registerUserTest() {
-    User user = new User(null, "Username", "email@email.com", "password", "password", null, null);
+    User user = new User(null, "Username", "email@email.com", "password", "password", null, null, null);
     userService.registerUser(user);
     verify(userRepository, times(1)).save(any());
   }
 
   @Test(expected = DifferentPasswordAndConfirmPasswordException.class)
   public void shouldThrowDifferentPasswordAndConfirmPasswordException() {
-    User user = new User(null, "Username", "email@email.com", "passwo", "password", null, null);
+    User user = new User(null, "Username", "email@email.com", "passwo", "password", null, null, null);
     userService.registerUser(user);
   }
 

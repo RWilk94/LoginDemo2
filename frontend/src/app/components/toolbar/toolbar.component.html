@@ -4,9 +4,9 @@
     <mat-icon class="mat-icon mat-icon-margin" role="img" aria-hidden="true">menu</mat-icon>
   </button>
 
-  <button mat-button class="mat-button-with-icon" routerLink="/home">
-    <mat-icon class="mat-icon mat-icon-margin" role="img" aria-hidden="true">home</mat-icon>
-    Home
+  <button mat-button class="mat-button-with-icon" routerLink="/home" >
+    <!--<mat-icon class="mat-icon mat-icon-margin" role="img" aria-hidden="true">home</mat-icon>-->
+    <b>Home Budget</b>
   </button>
 
   <span class="example-fill-remaining-space"></span>
@@ -16,7 +16,7 @@
   </div>
 
   <div>
-    <a routerLink="/login" routerLinkActive="active" (click)="onClick()" class="router-link-align-right"><b>{{loginService.checkLogin()?
+    <a routerLink="/login" routerLinkActive="active" (click)="logout()" class="router-link-align-right"><b>{{loginService.checkLogin()?
       'Sign Out' :
       'Sign in'}}</b></a>
     <ng-container *ngIf="!loginService.checkLogin()">
@@ -24,4 +24,33 @@
       <a routerLink="/register" routerLinkActive="active" class="router-link-align-right"><b>Sign up</b></a>
     </ng-container>
   </div>
+
+  <button mat-button class="mat-button-with-icon">
+    <mat-icon>notifications</mat-icon>
+  </button>
+
+  <!-- Profile menu -->
+  <mat-menu #appMenu="matMenu">
+
+    <button mat-menu-item class="menu-button" (click)="editProfileOnClick()">
+      <mat-icon >person</mat-icon>
+      View profile
+    </button>
+
+    <button mat-menu-item>
+      <mat-icon>settings</mat-icon>
+      Change password
+    </button>
+
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      Sign out
+    </button>
+  </mat-menu>
+
+  <!-- Profile menu button -->
+  <button mat-button class="mat-button-with-icon" [matMenuTriggerFor]="appMenu">
+    <mat-icon>person</mat-icon>
+  </button>
+
 </mat-toolbar>

@@ -13,6 +13,9 @@
   background: none;
   vertical-align: middle;
   color: white;
+  outline: none;
+  border: 0;
+  cursor: pointer;
 }
 
 .mat-icon-margin {
@@ -39,3 +42,8 @@
   border-radius: 1px;
   border: 1px solid white;
 }*/
+
+.menu-button {
+  outline: none;
+  border: 0;
+}

@@ -2,7 +2,7 @@ export interface NavigationMenuItem {
 
   displayName: string;
   disabled?: boolean;
-  iconName: string;
+  iconName?: string;
   route?: string;
   children?: NavigationMenuItem[];
 
