@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -30,8 +32,11 @@ public class Module implements Serializable {
   @JsonIgnore
   private Long id;
 
+  @NotNull
+  @Size(min = 3, max = 255)
   private String name;
 
+  @JsonIgnore
   @OneToMany(mappedBy = "module", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   private List<Category> categories;
 
