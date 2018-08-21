@@ -1,6 +1,7 @@
 package rwilk.logindemo2.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -43,9 +44,9 @@ public class UserService implements IUserService {
 
   @Override
   public JWTUser loadApplicationUserByUsername(String username) {
-    User user = userRepository.findUserByUsername(username);
-    if (user != null) {
-      return new JWTUser(user.getUsername(), /*"{passwordEncoder}"*/ user.getPassword());
+    Optional<User> user = userRepository.findUserByUsername(username);
+    if (user.isPresent()) {
+      return new JWTUser(user.get().getUsername(), /*"{passwordEncoder}"*/ user.get().getPassword());
     }
     throw new UsernameNotFoundException("Username: " + username + " not found");
   }
@@ -53,16 +54,14 @@ public class UserService implements IUserService {
   //Other methods
   @Override
   public User getUserByUsername(String username) {
-    User user = userRepository.findUserByUsername(username);
-    if (user != null) {
-      user.setPassword("");
-    }
-    return user;
+    Optional<User> user = userRepository.findUserByUsername(username);
+    user.ifPresent(user1 -> user1.setPassword(""));
+    return user.get();
   }
 
   @Override
   public List<User> findAllUsers() {
-    return userRepository.findAll();
+    return (List<User>) userRepository.findAll();
   }
 
   @Override

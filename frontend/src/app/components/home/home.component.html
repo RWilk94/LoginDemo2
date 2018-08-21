@@ -1,25 +1,66 @@
+<mat-tab-group>
+
+  <mat-tab label="Revenue">
+
+    <mat-card>
+      <mat-card-subtitle>Adding revenue</mat-card-subtitle>
+      <mat-card-content>
+        <form>
+          <input type="text" class="form-control input-incoming" id="name" maxlength="255" placeholder="Name">
+          <input type="number" class="form-control input-incoming" id="value" maxlength="255" placeholder="Value">
+
+          <mat-form-field class="input-incoming">
+            <mat-select placeholder="Category">
+              <mat-option *ngFor="let category of categories" value="category">{{category}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="input-incoming">
+            <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <br>
+          <button type="submit" class="btn btn-success input-incoming">Add</button>
+
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+
+  </mat-tab>
+  <mat-tab label="Expenditure"> Expenditure</mat-tab>
+  <mat-tab label="Categories"> Categories</mat-tab>
+
+</mat-tab-group>
+
+
+<br>
+<br>
+<br>
+<button type="button" class="btn btn-primary button-navigation-sub-toolbar">Add income</button>
+<button type="button" class="btn btn-primary button-navigation-sub-toolbar">Add outcome</button>
+<button type="button" class="btn btn-primary button-navigation-sub-toolbar">Add category</button>
+
+
 <div class="mat-card-container">
 
   <mat-card class="mat-card-chart-home">
-    <mat-card-subtitle>Home</mat-card-subtitle>
-    <mat-card-content>
-      <canvas id="canvas">{{chart}}</canvas>
-    </mat-card-content>
+    <mat-card-subtitle>First Card</mat-card-subtitle>
+    <mat-card-content>Content</mat-card-content>
   </mat-card>
 
   <mat-card class="mat-card-chart-car">
-    <mat-card-subtitle>Car</mat-card-subtitle>
-    <mat-card-content>
-      <!--<canvas id="canvas1">{{chart1}}</canvas>-->
-    </mat-card-content>
+    <mat-card-subtitle>Second Card</mat-card-subtitle>
+    <mat-card-content>Content</mat-card-content>
   </mat-card>
 
   <mat-card class="mat-card-chart-wedding">
-    <mat-card-subtitle>Wedding</mat-card-subtitle>
-    <mat-card-content>
-      <!--<canvas id="canvas2">{{chart2}}</canvas>-->
-    </mat-card-content>
+    <mat-card-subtitle>Third Card</mat-card-subtitle>
+    <mat-card-content>Content</mat-card-content>
   </mat-card>
+
 </div>
 
 

@@ -50,7 +50,7 @@ public class UserControllerTest {
     this.mockMvc = MockMvcBuilders.standaloneSetup(userController)
         .setControllerAdvice(new RestExceptionHandler())
         .build();
-    user = new User(null, "username", "email@email.com", "password", "password", null, null, null);
+    user = new User(null, "username", "email@email.com", "password", "password", null, null);
   }
 
   @Test

@@ -25,9 +25,14 @@ public class ModuleService implements IModuleService {
     return repository.findById(id).orElse(null);
   }
 
-  @Override
+  /*@Override
   public Module getModuleByName(String name) {
     return repository.findByName(name);
-  }
+  }*/
+
+  /*@Override
+  public Module addModule(Module module) {
+    return repository.save(module);
+  }*/
 
 }

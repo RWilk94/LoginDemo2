@@ -1,8 +1,8 @@
 .mat-card-container {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
+   width: 100%;
+   margin: 0;
+   padding: 0;
+ }
 
 @media only screen and (min-width: 1050px){
   mat-card.mat-card-chart-home {
@@ -53,15 +53,4 @@
     width: 100%;
     display: inline-block;
   }
-}
-
-
-button.button-navigation-sub-toolbar {
-  margin: 5px;
-}
-
-.input-incoming {
-  max-width: 400px;
-  padding: 5px 5px;
-  margin: 5px 5px;
 }

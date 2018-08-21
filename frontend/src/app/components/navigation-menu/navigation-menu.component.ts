@@ -15,13 +15,13 @@ export class NavigationMenuComponent implements OnInit, AfterViewInit {
 
   navItems: NavigationMenuItem[] = [
     {
-      displayName: 'Home',
+      displayName: 'Dashboard',
       iconName: 'explore',
-      route: 'home'
+      route: 'dashboard'
     },
     {
-      displayName: 'Home budget',
-      iconName: 'attach_money',
+      displayName: 'Home',
+      iconName: 'home',
       children: [
         {
           displayName: 'Bills',
@@ -30,8 +30,7 @@ export class NavigationMenuComponent implements OnInit, AfterViewInit {
         },
         {
           displayName: 'Food',
-          iconName: 'restaurant',
-          route: 'profile'
+          iconName: 'restaurant'
         }
       ]
     },
@@ -49,7 +48,10 @@ export class NavigationMenuComponent implements OnInit, AfterViewInit {
       displayName: 'Wedding',
       iconName: 'favorite',
       children: [
-
+        {
+          displayName: 'Priest',
+          iconName: 'info'
+        }
       ]
     },
     {

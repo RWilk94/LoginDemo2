@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {User} from "../../models/user";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-profile',
@@ -25,7 +26,14 @@ export class ProfileComponent implements OnInit {
       this.currentUser = data;
       console.log(this.currentUser);
     },
-      error1 => console.log(error1)
+      error1 => {
+        console.log(error1);
+        if (error1 instanceof HttpErrorResponse) {
+         if (error1.error.message.toString().match('JWT expired')) {
+           // TODO session expired - redirect to login page
+         }
+        }
+      }
     );
   }
 

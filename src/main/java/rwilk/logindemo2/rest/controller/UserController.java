@@ -13,6 +13,7 @@ import rwilk.logindemo2.model.User;
 import rwilk.logindemo2.rest.exception.UserNotFoundException;
 import rwilk.logindemo2.service.IUserService;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -21,11 +22,11 @@ import javax.validation.Valid;
 public class UserController {
 
   @Autowired
-  private IUserService IUserService;
+  private IUserService userService;
 
   @RequestMapping(value = "/register", method = RequestMethod.POST)
   public User registerUser(@Valid @RequestBody User user) {
-    return IUserService.registerUser(user);
+    return userService.registerUser(user);
   }
 
   @PreAuthorize("hasAnyRole('USER')")
@@ -35,7 +36,7 @@ public class UserController {
     if (username == null || username.isEmpty()) {
       throw new UserNotFoundException("Empty username");
     }
-    return new ResponseEntity<>(IUserService.getUserByUsername(username), HttpStatus.OK);
+    return new ResponseEntity<>(userService.getUserByUsername(username), HttpStatus.OK);
   }
 
   @PreAuthorize("hasAnyRole('USER')")
@@ -44,6 +45,11 @@ public class UserController {
     /*if (user == null) {
       throw new UserNotFoundException("Empty user data");
     }*/
-    return new ResponseEntity<>(IUserService.updateUser(user), HttpStatus.OK);
+    return new ResponseEntity<>(userService.updateUser(user), HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/users", method = RequestMethod.GET)
+  public List<User> getAllUsers() {
+    return userService.findAllUsers();
   }
 }

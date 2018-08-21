@@ -20,6 +20,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,6 +33,7 @@ import rwilk.logindemo2.validator.Username;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class User implements Serializable {
 
   @Id
@@ -64,6 +66,10 @@ public class User implements Serializable {
   @CreationTimestamp
   private Date created;
 
+  /*@JsonIgnore
   @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-  private List<Spend> spends;
+  private List<Spend> spending;*/
+
+  /*@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+  private List<Category> categories;*/
 }

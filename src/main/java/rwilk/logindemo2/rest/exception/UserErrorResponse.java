@@ -3,7 +3,7 @@ package rwilk.logindemo2.rest.exception;
 import lombok.Data;
 
 /**
- * Model class for Exception Response.
+ * Module class for Exception Response.
  */
 @Data
 public class UserErrorResponse {

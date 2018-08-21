@@ -1,5 +1,7 @@
 package rwilk.logindemo2.service.impl;
 
+import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -31,26 +33,26 @@ public class UserServiceTest {
   @Mock
   private PasswordEncoder passwordEncoder;
 
-  private User user;
+  private Optional<User> user;
 
   @Before
   public void setup() {
     MockitoAnnotations.initMocks(this);
     //when(userRepository.save(any(User.class))).thenReturn(any(User.class));
-    user = new User(null, "username", "email@email.com", "password", "password", null, null, null);
+    user = Optional.of(new User(null, "username", "email@email.com", "password", "password", null, null));
     when(userRepository.findUserByUsername("username")).thenReturn(user);
   }
 
   @Test
   public void registerUserTest() {
-    User user = new User(null, "Username", "email@email.com", "password", "password", null, null, null);
+    User user = new User(null, "Username", "email@email.com", "password", "password", null, null);
     userService.registerUser(user);
     verify(userRepository, times(1)).save(any());
   }
 
   @Test(expected = DifferentPasswordAndConfirmPasswordException.class)
   public void shouldThrowDifferentPasswordAndConfirmPasswordException() {
-    User user = new User(null, "Username", "email@email.com", "passwo", "password", null, null, null);
+    User user = new User(null, "Username", "email@email.com", "passwo", "password", null, null);
     userService.registerUser(user);
   }
 
@@ -68,8 +70,8 @@ public class UserServiceTest {
 
   @Test
   public void updateUserTest() {
-    user.setEmail("email@wolf.pl");
-    userService.updateUser(user);
+    user.get().setEmail("email@wolf.pl");
+    userService.updateUser(user.get());
     verify(userRepository, times(1)).save(any());
   }
 
