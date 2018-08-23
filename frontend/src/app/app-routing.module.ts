@@ -6,6 +6,8 @@ import {NgModule} from "@angular/core";
 import {AuthGuardService} from "./auth/auth-guard.service";
 import {ProfileComponent} from "./components/profile/profile.component";
 import {DashboardComponent} from "./components/dashboard/dashboard.component";
+import {SpendingComponent} from "./components/spending/spending.component";
+import {CategoriesComponent} from "./components/categories/categories.component";
 
 const routes: Routes = [
   // {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -13,7 +15,9 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]}
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]},
+  {path: 'spending', component: SpendingComponent, canActivate: [AuthGuardService]},
+  {path: 'categories', component: CategoriesComponent, canActivate: [AuthGuardService]}
 ];
 
 @NgModule({

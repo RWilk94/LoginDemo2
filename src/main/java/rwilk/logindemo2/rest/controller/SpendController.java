@@ -19,7 +19,7 @@ public class SpendController {
   private ISpendService spendService;
 
   @RequestMapping(value = "", method = RequestMethod.GET)
-  public List<Spend> getAllSpends() {
+  public List<Spend> getSpending() {
     return spendService.getSpending();
   }
 

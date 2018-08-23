@@ -3,7 +3,7 @@ package rwilk.logindemo2.service;
 import java.util.List;
 
 import rwilk.logindemo2.model.Spend;
-
+import rwilk.logindemo2.model.User;
 
 public interface ISpendService {
 
@@ -13,5 +13,5 @@ public interface ISpendService {
   /** looks ok */
   Spend addSpend(Spend spend);
 
-  List<Spend> getSpending(Long userId);
+  List<Spend> getSpending(User user);
 }

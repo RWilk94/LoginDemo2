@@ -40,7 +40,7 @@ public class Category implements Serializable {
   @Size(min = 3, max = 255)
   private String name;
 
-  @JsonIgnore
+  //@JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   @JoinColumn(name = "id_user", referencedColumnName = "userId")
   private User user;

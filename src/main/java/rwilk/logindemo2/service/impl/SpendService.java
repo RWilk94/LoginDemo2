@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import rwilk.logindemo2.model.Category;
-import rwilk.logindemo2.model.Module;
 import rwilk.logindemo2.model.Spend;
 import rwilk.logindemo2.model.User;
 import rwilk.logindemo2.repository.CategoryRepository;
@@ -45,9 +44,10 @@ public class SpendService implements ISpendService {
   }
 
   @Override
-  public List<Spend> getSpending(Long userId) {
+  public List<Spend> getSpending(User user) {
 
-    spendRepository.findAllBy
+    return null;
+    //spendRepository.findAllBy
 
   }
 }

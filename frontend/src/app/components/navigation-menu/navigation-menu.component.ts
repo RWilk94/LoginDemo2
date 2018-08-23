@@ -24,13 +24,14 @@ export class NavigationMenuComponent implements OnInit, AfterViewInit {
       iconName: 'home',
       children: [
         {
-          displayName: 'Bills',
+          displayName: 'Spending',
           iconName: 'money',
-          route: 'home'
+          route: 'spending'
         },
         {
-          displayName: 'Food',
-          iconName: 'restaurant'
+          displayName: 'Categories',
+          iconName: 'restaurant',
+          route: 'categories'
         }
       ]
     },

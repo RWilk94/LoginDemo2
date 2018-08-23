@@ -16,7 +16,7 @@ import {
   MatIconModule, MatInputModule,
   MatListModule,
   MatMenuModule, MatNativeDateModule, MatSelectModule,
-  MatSidenavModule, MatTabsModule,
+  MatSidenavModule, MatTableModule, MatTabsModule,
   MatToolbarModule
 } from "@angular/material";
 import {FlexLayoutModule} from "@angular/flex-layout";
@@ -27,6 +27,12 @@ import { NavigationMenuComponent } from './components/navigation-menu/navigation
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { MenuListItemComponent } from './components/menu-list-item/menu-list-item.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { SpendingComponent } from './components/spending/spending.component';
+import { CategoriesComponent } from './components/categories/categories.component';
+import {SpendingService} from "./services/spending.service";
+import {NavigationMenuService} from "./services/navigation-menu.service";
+import {CategoryService} from "./services/category.service";
+import {ModuleService} from "./services/module.service";
 
 @NgModule({
   declarations: [
@@ -38,7 +44,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     ProfileComponent,
     NavigationMenuComponent,
     MenuListItemComponent,
-    DashboardComponent
+    DashboardComponent,
+    SpendingComponent,
+    CategoriesComponent
   ],
   imports: [
     AppRoutingModule,
@@ -59,6 +67,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
+    MatTableModule,
 
     FlexLayoutModule,
     ReactiveFormsModule,
@@ -67,6 +76,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
   providers: [
     LoginService,
     RegisterService,
+    SpendingService,
+    NavigationMenuService,
+    CategoryService,
+    ModuleService,
     UserService],
   bootstrap: [AppComponent]
 })

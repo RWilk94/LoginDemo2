@@ -1,0 +1,14 @@
+.input-form {
+  margin: 10px;
+  min-width: 300px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.mat-input-form {
+  width: 100%;
+}
+
+table {
+  width: 100%;
+}
