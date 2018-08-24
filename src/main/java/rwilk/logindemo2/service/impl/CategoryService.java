@@ -37,6 +37,17 @@ public class CategoryService implements ICategoryService {
   }
 
   @Override
+  public List<Category> getCategories(String username) {
+    if (username != null) {
+      Optional<User> user = userRepository.findUserByUsername(username);
+      if (user.isPresent()) {
+        return categoryRepository.getUserCategories(user.get());
+      }
+    }
+    return null;
+  }
+
+  @Override
   public Category addCategory(Category category) {
     Optional<User> user = userRepository.findUserByUsername(category.getUser().getUsername());
     Module module = moduleRepository.findByName(category.getModule().getName());

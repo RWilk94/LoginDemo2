@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Category} from "../../models/category";
 import {CategoryService} from "../../services/category.service";
 import {Module} from "../../models/module";
@@ -6,7 +6,7 @@ import {ModuleService} from "../../services/module.service";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {User} from "../../models/user";
 import {Cookie} from "ng2-cookies/ng2-cookies";
-import {MatTableDataSource} from "@angular/material";
+import {MatSort, MatTableDataSource} from "@angular/material";
 
 @Component({
   selector: 'app-categories',
@@ -15,14 +15,17 @@ import {MatTableDataSource} from "@angular/material";
 })
 export class CategoriesComponent implements OnInit {
 
+  @ViewChild(MatSort) sort: MatSort;
+
   public categories: Category[] = [];
   public modules: Module[] = [];
 
   public category: Category;
   public form: FormGroup;
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['position', 'name', 'module'];
+  //dataSource = new MatTableDataSource<Category>(this.categories);
+  dataSource = new MatTableDataSource<CategoryElement>(this.createCategoryElements());
 
   constructor(private moduleService: ModuleService, private categoryService: CategoryService, private formBuilder: FormBuilder) {
     this.category = new Category();
@@ -30,13 +33,13 @@ export class CategoriesComponent implements OnInit {
     moduleService.getModules().subscribe(modules => {
       this.modules = modules;
     });
+    this.refresh();
 
-    categoryService.getCategories().subscribe(categories => {
-      this.categories = categories;
-    });
   }
 
   ngOnInit() {
+    this.dataSource.sort = this.sort;
+
     this.form = this.formBuilder.group({
       name: new FormControl(this.category.name),
       module: new FormControl(this.category.module)
@@ -48,47 +51,50 @@ export class CategoriesComponent implements OnInit {
     this.category.module = this.form.controls['module'].value;
 
     if (this.category.name !== null && this.category.module !== null) {
-      // TODO send request
       let username = Cookie.get('username');
       if (username !== null) {
         let user: User = new User();
         user.username = username;
         this.category.user = user;
         this.categoryService.addCategory(this.category).subscribe(
-          data => console.log(data), error1 => console.log(error1));
+          data => {
+            console.log(data);
+            this.refresh();
+          },
+          error1 => console.log(error1));
       }
     }
   }
 
+  refresh() {
+    this.categoryService.getCategories(Cookie.get('username')).subscribe(categories => {
+      console.log(categories);
+      this.categories = categories;
+      //this.dataSource = new MatTableDataSource<Category>(this.categories);
+      this.dataSource = new MatTableDataSource<CategoryElement>(this.createCategoryElements());
+      this.dataSource.sort = this.sort;
+    });
+  }
+
+  private createCategoryElements() {
+    let categoryElements: CategoryElement[] = [];
+
+    for (let i = 0; i< this.categories.length; i++) {
+      let element: CategoryElement = new CategoryElement();
+      element.position = i + 1;
+      element.name = this.categories[i].name;
+      element.module = this.categories[i].module.name;
+      categoryElements.push(element);
+    }
+    return categoryElements;
+  }
 
 }
 
-export interface PeriodicElement {
-  name: string;
+export class CategoryElement {
   position: number;
-  weight: number;
-  symbol: string;
+  name: string;
+  module: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-  {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-  {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-  {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-  {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-  {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-  {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-  {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-  {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-  {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
-];
+

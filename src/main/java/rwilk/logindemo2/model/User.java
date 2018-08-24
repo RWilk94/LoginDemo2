@@ -53,6 +53,7 @@ public class User implements Serializable {
   @Column(unique = true)
   private String email;
 
+  @JsonIgnore
   @NotNull
   @Size(min = 6, max = 256)
   private String password;

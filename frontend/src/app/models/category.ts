@@ -7,4 +7,5 @@ export class Category {
   public name: string;
   public module: Module;
   public user?: User;
+
 }

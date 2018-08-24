@@ -24,9 +24,14 @@ public class CategoryController {
     return service.getCategories();
   }
 
-  @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+  /*@RequestMapping(value = "/{id}", method = RequestMethod.GET)
   public Category getCategory(@PathVariable Long id) {
     return service.getCategory(id);
+  }*/
+
+  @RequestMapping(value = "/{username}", method = RequestMethod.GET)
+  public List<Category> getCategory(@PathVariable String username) {
+    return service.getCategories(username);
   }
 
   @RequestMapping(value = "", method = RequestMethod.POST)

@@ -16,7 +16,7 @@ import {
   MatIconModule, MatInputModule,
   MatListModule,
   MatMenuModule, MatNativeDateModule, MatSelectModule,
-  MatSidenavModule, MatTableModule, MatTabsModule,
+  MatSidenavModule, MatSortModule, MatTableModule, MatTabsModule,
   MatToolbarModule
 } from "@angular/material";
 import {FlexLayoutModule} from "@angular/flex-layout";
@@ -68,6 +68,7 @@ import {ModuleService} from "./services/module.service";
     MatNativeDateModule,
     MatSelectModule,
     MatTableModule,
+    MatSortModule,
 
     FlexLayoutModule,
     ReactiveFormsModule,

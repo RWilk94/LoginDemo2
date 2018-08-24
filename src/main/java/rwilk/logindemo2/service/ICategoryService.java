@@ -10,6 +10,8 @@ public interface ICategoryService {
 
   Category getCategory(Long id);
 
+  List<Category> getCategories(String username);
+
   Category addCategory(Category category);
 
 }
