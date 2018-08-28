@@ -1,6 +1,6 @@
 /* Set size of the main body element */
 body {
   /*TODO main height property*/
-  height: auto;
-  width: 100%;
+  /*width: 100%;*/
+  height: 94vh;
 }

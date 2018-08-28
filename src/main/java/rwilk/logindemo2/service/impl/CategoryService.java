@@ -58,4 +58,38 @@ public class CategoryService implements ICategoryService {
     }
     return null;
   }
+
+  @Override
+  public void deleteCategory(String authorization, Long id) {
+    Category category = this.getCategory(id);
+    if (authorization != null
+        && !authorization.isEmpty()
+        && category != null
+        && category.getUser() != null
+        && category.getUser().getUsername() != null
+        && !category.getUser().getUsername().isEmpty()
+        && authorization.equals(category.getUser().getUsername())) {
+
+      categoryRepository.delete(category);
+    } else {
+      // TODO throw error unauthorized
+      System.err.println("Unauthorized deleted Category...");
+    }
+  }
+
+  @Override
+  public Category updateCategory(String authorization, Category category) {
+    Category newCategory = getCategory(category.getId());
+    if (authorization != null
+        && !authorization.isEmpty()
+        && category.getUser() != null
+        && category.getUser().getUsername() != null
+        && !category.getUser().getUsername().isEmpty()
+        && authorization.equals(category.getUser().getUsername())) {
+
+      newCategory.setName(category.getName());
+      return categoryRepository.save(newCategory);
+    }
+    return null;
+  }
 }

@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -32,7 +33,8 @@ import lombok.NoArgsConstructor;
 public class Category implements Serializable {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @SequenceGenerator(initialValue = 1, name = "categorySG", sequenceName = "categorySEQ")
+  @GeneratedValue(strategy = GenerationType.AUTO, generator = "categorySG")
   //@JsonIgnore
   private Long id;
 

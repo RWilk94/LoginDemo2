@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -30,7 +31,8 @@ import lombok.NoArgsConstructor;
 public class Spend implements Serializable {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @SequenceGenerator(initialValue = 1, name = "spendSG", sequenceName = "spendSEQ")
+  @GeneratedValue(strategy = GenerationType.AUTO, generator = "spendSG")
   @JsonIgnore
   private Long id;
 

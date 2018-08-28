@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Category} from "../models/category";
 import {Observable} from "rxjs/internal/Observable";
 import {User} from "../models/user";
+import {Cookie} from "ng2-cookies/ng2-cookies";
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +24,21 @@ export class CategoryService {
     let url = 'http://localhost:8080/categories';
     let header = new HttpHeaders(({'Content-Type': 'application/json'}));
     return this.http.post(url, JSON.stringify(category), {headers: header});
+  }
+
+  deleteCategory(category: Category) {
+    console.log('deleteCategory' + category.name);
+    console.log(JSON.stringify(category));
+    let url = 'http://localhost:8080/categories/';
+    let header = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + Cookie.get('token')});
+    return this.http.delete(url + category.id, {headers: header})
+  }
+
+  updateCategory(category: Category) {
+    console.log('updateCategory' + category.name);
+    console.log(JSON.stringify(category));
+    let url = 'http://localhost:8080/categories';
+    let header = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + Cookie.get('token')});
+    return this.http.patch(url, JSON.stringify(category), {headers: header})
   }
 }

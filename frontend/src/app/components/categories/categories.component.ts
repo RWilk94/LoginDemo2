@@ -23,7 +23,7 @@ export class CategoriesComponent implements OnInit {
   public category: Category;
   public form: FormGroup;
 
-  displayedColumns: string[] = ['position', 'name', 'module'];
+  displayedColumns: string[] = ['position', 'name', 'module', 'options'];
   //dataSource = new MatTableDataSource<Category>(this.categories);
   dataSource = new MatTableDataSource<CategoryElement>(this.createCategoryElements());
 
@@ -79,7 +79,7 @@ export class CategoriesComponent implements OnInit {
   private createCategoryElements() {
     let categoryElements: CategoryElement[] = [];
 
-    for (let i = 0; i< this.categories.length; i++) {
+    for (let i = 0; i < this.categories.length; i++) {
       let element: CategoryElement = new CategoryElement();
       element.position = i + 1;
       element.name = this.categories[i].name;
@@ -89,6 +89,24 @@ export class CategoriesComponent implements OnInit {
     return categoryElements;
   }
 
+  deleteElement(element: CategoryElement) {
+    let category = this.categories[element.position - 1];
+    console.log('Category: ' + JSON.stringify(category));
+    this.categoryService.deleteCategory(category).subscribe(data => this.refresh(), error1 => console.log(error1));
+  }
+
+  editElement(element: CategoryElement) {
+    let category = this.categories[element.position - 1];
+    category.name = element.name;
+    console.log('Edit category: ' + JSON.stringify(category));
+    // TODO send request edit name
+    this.categoryService.updateCategory(category).subscribe(data => console.log(data), error1 => console.log(error1));
+  }
+
+  editElementName(name: string, element: CategoryElement) {
+    // Edit name
+    this.dataSource.data[element.position - 1].name = name;
+  }
 }
 
 export class CategoryElement {

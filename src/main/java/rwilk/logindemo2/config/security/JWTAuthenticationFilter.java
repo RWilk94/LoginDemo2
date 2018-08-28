@@ -58,7 +58,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     ZonedDateTime expirationTimeUTC =
         ZonedDateTime.now(ZoneOffset.UTC).plus(EXPIRATION_TIME, ChronoUnit.SECONDS); //EXPIRATION_TIME, ChronoUnit.MILLIS);
-    String token = Jwts.builder().setSubject(((User) authResult.getPrincipal()).getUsername())
+    String token = Jwts.builder().setSubject(((User) authResult.getPrincipal()).getUsername()) // TODO add expiration time to body/subject
         .setExpiration(Date.from(expirationTimeUTC.toInstant()))
         .signWith(SignatureAlgorithm.HS256, SECRET)
         .compact();

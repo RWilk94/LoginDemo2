@@ -14,4 +14,8 @@ public interface ICategoryService {
 
   Category addCategory(Category category);
 
+  void deleteCategory(String authorization, Long id);
+
+  Category updateCategory(String authorization, Category category);
+
 }

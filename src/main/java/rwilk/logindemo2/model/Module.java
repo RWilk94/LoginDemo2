@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -30,7 +31,8 @@ import lombok.NoArgsConstructor;
 public class Module implements Serializable {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @SequenceGenerator(initialValue = 1, name = "moduleSG", sequenceName = "moduleSEQ")
+  @GeneratedValue(strategy = GenerationType.AUTO, generator = "moduleSG")
   private Long id;
 
   @NotNull

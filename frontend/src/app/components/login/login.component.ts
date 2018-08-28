@@ -39,25 +39,25 @@ export class LoginComponent {
   }
 
   /*onSubmit() {
-    console.log('onSubmit', this.model);
+    console.editElementName('onSubmit', this.model);
     this.loginService.sendCredential(this.model).subscribe(
       data => {
-        console.log('Data: ' + data);
-        console.log('Data1: ' + JSON.stringify(data));
-        console.log('Data2: ' + JSON.parse(JSON.stringify(data))._body.substring(10, JSON.parse(JSON.stringify(data))._body.length - 2));
+        console.editElementName('Data: ' + data);
+        console.editElementName('Data1: ' + JSON.stringify(data));
+        console.editElementName('Data2: ' + JSON.parse(JSON.stringify(data))._body.substring(10, JSON.parse(JSON.stringify(data))._body.length - 2));
         localStorage.setItem("token", JSON.parse(JSON.stringify(data))._body.substring(10, JSON.parse(JSON.stringify(data))._body.length - 2));
         this.loginService.sendToken(localStorage.getItem("token")).subscribe(
           data => {
-            console.log('Data2:' + data);
+            console.editElementName('Data2:' + data);
             this.currentUserName = this.model.username;
             localStorage.setItem("username", this.model.username);
             this.model.username = '';
             this.model.password = '';
           },
-          exception => console.log(exception)
+          exception => console.editElementName(exception)
         );
       },
-      error1 => console.log(error1)
+      error1 => console.editElementName(error1)
     );
   }*/
 

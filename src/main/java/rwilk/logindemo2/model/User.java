@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -37,7 +38,8 @@ import rwilk.logindemo2.validator.Username;
 public class User implements Serializable {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSG")
+  @SequenceGenerator(name = "userSG", sequenceName = "userSEQ", allocationSize = 1)
   @JsonIgnore
   private Long userId;
 
@@ -53,7 +55,7 @@ public class User implements Serializable {
   @Column(unique = true)
   private String email;
 
-  @JsonIgnore
+  //@JsonIgnore
   @NotNull
   @Size(min = 6, max = 256)
   private String password;

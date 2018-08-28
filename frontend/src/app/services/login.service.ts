@@ -12,14 +12,14 @@ export class LoginService {
   }
 
   signIn(model) {
-    //console.log('sign in');
+    //console.editElementName('sign in');
     let tokenUrl = 'http://localhost:8080/login';
     let header = new HttpHeaders({'Content-Type': 'application/json'});
     return this.http.post(tokenUrl, model, {headers: header});
   }
 
   checkVerificationToken(token, username) {
-    //console.log('send verification token');
+    //console.editElementName('send verification token');
     let model = {'username': username};
     model.username = username;
     let url = 'http://localhost:8080/user';
@@ -37,7 +37,7 @@ export class LoginService {
   }
 
   getUsername() {
-    //console.log(Cookie.get('username'));
+    //console.editElementName(Cookie.get('username'));
     return Cookie.get('username');
   }
 }
