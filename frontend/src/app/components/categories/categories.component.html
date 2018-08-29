@@ -38,7 +38,8 @@
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-        <td mat-cell *matCellDef="let element" contenteditable="true" (blur)="editElementName($event.target.textContent, element)">
+        <td mat-cell *matCellDef="let element" contenteditable="true"
+            (blur)="editElementName($event.target.textContent, element)">
           {{element.name}}
         </td>
       </ng-container>
@@ -49,10 +50,14 @@
       </ng-container>
 
       <ng-container matColumnDef="options">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Options</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          <button id="options-button" matTooltip="You can edit custom categories only.">Options</button>
+        </th>
         <td mat-cell *matCellDef="let row">
-          <button type="button" class="btn btn-primary" (click)="editElement(row)">Edit</button>
-          <button type="button" class="btn btn-danger" (click)="deleteElement(row)">Delete</button>
+          <button type="button" class="btn btn-primary" *ngIf="row.isCustom"
+                  (click)="editElement(row)">Edit</button>
+          <button type="button" class="btn btn-danger" *ngIf="row.isCustom"
+                  (click)="deleteElement(row)">Delete</button>
         </td>
       </ng-container>
 

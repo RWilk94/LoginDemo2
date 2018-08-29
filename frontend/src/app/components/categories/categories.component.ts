@@ -24,7 +24,6 @@ export class CategoriesComponent implements OnInit {
   public form: FormGroup;
 
   displayedColumns: string[] = ['position', 'name', 'module', 'options'];
-  //dataSource = new MatTableDataSource<Category>(this.categories);
   dataSource = new MatTableDataSource<CategoryElement>(this.createCategoryElements());
 
   constructor(private moduleService: ModuleService, private categoryService: CategoryService, private formBuilder: FormBuilder) {
@@ -66,16 +65,17 @@ export class CategoriesComponent implements OnInit {
     }
   }
 
+  // Refresh categories list after add or delete element
   refresh() {
     this.categoryService.getCategories(Cookie.get('username')).subscribe(categories => {
       console.log(categories);
       this.categories = categories;
-      //this.dataSource = new MatTableDataSource<Category>(this.categories);
       this.dataSource = new MatTableDataSource<CategoryElement>(this.createCategoryElements());
       this.dataSource.sort = this.sort;
     });
   }
 
+  // Convert Category to CategoryElement in source data list
   private createCategoryElements() {
     let categoryElements: CategoryElement[] = [];
 
@@ -84,6 +84,7 @@ export class CategoriesComponent implements OnInit {
       element.position = i + 1;
       element.name = this.categories[i].name;
       element.module = this.categories[i].module.name;
+      element.isCustom = !(this.categories[i].user === null || this.categories[i].user === undefined);
       categoryElements.push(element);
     }
     return categoryElements;
@@ -97,12 +98,12 @@ export class CategoriesComponent implements OnInit {
 
   editElement(element: CategoryElement) {
     let category = this.categories[element.position - 1];
-    category.name = element.name;
+    category.name = element.name.trim();
     console.log('Edit category: ' + JSON.stringify(category));
-    // TODO send request edit name
     this.categoryService.updateCategory(category).subscribe(data => console.log(data), error1 => console.log(error1));
   }
 
+  // Edit single element name in datasource
   editElementName(name: string, element: CategoryElement) {
     // Edit name
     this.dataSource.data[element.position - 1].name = name;
@@ -113,6 +114,7 @@ export class CategoryElement {
   position: number;
   name: string;
   module: string;
+  isCustom: boolean; //says if category is added by user or by system
 }
 
 

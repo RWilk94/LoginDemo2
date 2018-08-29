@@ -28,6 +28,7 @@ export class LoginComponent {
             // localStorage.setItem('username', this.model.username);
             Cookie.set('token', this.token.token);
             Cookie.set('username', this.model.username);
+            Cookie.set('password', this.model.password);
             this.currentUserName = this.model.username;
             this.model.username = '';
             this.model.password = '';

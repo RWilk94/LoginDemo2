@@ -1,4 +1,5 @@
 import {Category} from "./category";
+import {User} from "./user";
 
 export class Spending {
 
@@ -7,5 +8,6 @@ export class Spending {
   public category: Category;
   public date: Date;
   public value: number;
+  public user: User;
 
 }

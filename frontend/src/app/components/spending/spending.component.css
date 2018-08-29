@@ -1,0 +1,21 @@
+.mat-input-form {
+  width: 100%;
+  max-width: 500px;
+  border: 1px;
+}
+
+.btn {
+  margin: 5px;
+  font-size: 12px;
+}
+
+table {
+  width: 100%;
+  height: border-box;
+  overflow: visible;
+  table-layout: fixed;
+}
+
+.editableInput:read-write {
+  color: lightgray;
+}

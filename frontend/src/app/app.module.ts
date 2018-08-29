@@ -12,12 +12,13 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {AppRoutingModule} from "./app-routing.module";
 import {
-  MatCardModule, MatDatepickerModule, MatFormFieldModule,
+  MAT_DATE_LOCALE,
+  MatCardModule, MatDatepickerModule, MatExpansionModule, MatFormFieldModule,
   MatIconModule, MatInputModule,
   MatListModule,
   MatMenuModule, MatNativeDateModule, MatSelectModule,
   MatSidenavModule, MatSortModule, MatTableModule, MatTabsModule,
-  MatToolbarModule
+  MatToolbarModule, MatTooltipModule
 } from "@angular/material";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {ProfileComponent} from './components/profile/profile.component';
@@ -69,6 +70,8 @@ import {ModuleService} from "./services/module.service";
     MatSelectModule,
     MatTableModule,
     MatSortModule,
+    MatTooltipModule,
+    MatExpansionModule,
 
     FlexLayoutModule,
     ReactiveFormsModule,
@@ -81,7 +84,8 @@ import {ModuleService} from "./services/module.service";
     NavigationMenuService,
     CategoryService,
     ModuleService,
-    UserService],
+    UserService,
+    {provide: MAT_DATE_LOCALE, useValue: 'pl-PL'}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

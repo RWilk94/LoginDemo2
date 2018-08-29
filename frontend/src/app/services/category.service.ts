@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Category} from "../models/category";
 import {Observable} from "rxjs/internal/Observable";
-import {User} from "../models/user";
 import {Cookie} from "ng2-cookies/ng2-cookies";
 
 @Injectable({

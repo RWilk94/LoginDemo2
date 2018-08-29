@@ -3,6 +3,12 @@
   font-size: 12px;
 }
 
+#options-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 .mat-card-container {
   /*display: inline-flex;*/
   /*flex-flow: row wrap;*/

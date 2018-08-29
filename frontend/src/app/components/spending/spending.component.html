@@ -1,3 +1,116 @@
+<mat-card xmlns:columns="http://www.w3.org/1999/xhtml">
+  <mat-card-subtitle>Add spend</mat-card-subtitle>
+  <mat-card-content>
+
+    <form [formGroup]="form" #spendingForm="ngForm">
+
+      <mat-form-field class="mat-input-form">
+        <input matInput placeholder="Name"
+               required
+               formControlName="name" name="name" id="name">
+      </mat-form-field>
+      <br>
+
+      <mat-form-field class="mat-input-form">
+        <input matInput placeholder="Value" type="number"
+               required
+               formControlName="value" name="value" id="value">
+      </mat-form-field>
+      <br>
+
+      <mat-form-field class="mat-input-form">
+        <mat-select placeholder="Category" required formControlName="category">
+          <mat-option *ngFor="let category of categories" [value]="category">
+            {{category.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+
+      <mat-form-field class="mat-input-form">
+        <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <br>
+
+      <button type="reset" class="btn btn-secondary">Clear</button>
+      <button type="submit" (click)="onSubmit()" class="btn btn-success">Add</button>
+    </form>
+
+
+  </mat-card-content>
+</mat-card>
+
+
+<mat-card>
+  <mat-card-subtitle>Spending</mat-card-subtitle>
+  <mat-card-content>
+
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+        <td mat-cell *matCellDef="let element">{{element.position}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name.</th>
+        <td mat-cell *matCellDef="let element" contenteditable="true">
+          <!--{{element.name}}-->
+          <input [readonly]="!element.isEditing" matInput value="{{element.name}}"
+                 (blur)="editSpendingName($event.target.value, element)" class="editableInput">
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="value">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Value</th>
+        <td mat-cell *matCellDef="let element">
+            <input [readonly]="!element.isEditing" matInput value="{{element.value}}"
+                   (blur)="editSpendingValue($event.target.value, element)" class="editableInput">
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+        <td mat-cell *matCellDef="let element">
+          {{element.category}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+        <td mat-cell *matCellDef="let element" contenteditable="false">
+          <!--{{element.date1 | date1 : "dd.MM.y"}}-->
+
+          <input matInput [matDatepicker]="picker" [(ngModel)]="element.date1" startDate>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker ></mat-datepicker>
+
+
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="options">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Options</th>
+        <td mat-cell *matCellDef="let element">
+          <button type="button" class="btn btn-primary" *ngIf="!element.isEditing" (click)="editElement(element)">Edit</button>
+          <button type="button" class="btn btn-success" *ngIf="element.isEditing" (click)="saveEditElement(element)">Save</button>
+
+          <button type="button" class="btn btn-danger" *ngIf="!element.isEditing" (click)="deleteElement(element)">Delete</button>
+          <button type="button" class="btn btn-danger" *ngIf="element.isEditing" (click)="cancelEditElement(element)">Cancel</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    </table>
+  </mat-card-content>
+
+</mat-card>
+
+
 <p>
   spending works!
 </p>

@@ -13,4 +13,5 @@ public interface SpendRepository extends CrudRepository<Spend, Long> {
 
   public List<Spend> findAllByUser(User user);
 
+
 }

@@ -33,7 +33,7 @@ public class Spend implements Serializable {
   @Id
   @SequenceGenerator(initialValue = 1, name = "spendSG", sequenceName = "spendSEQ")
   @GeneratedValue(strategy = GenerationType.AUTO, generator = "spendSG")
-  @JsonIgnore
+  //@JsonIgnore
   private Long id;
 
   private String name;

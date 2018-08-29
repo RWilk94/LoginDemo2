@@ -8,10 +8,14 @@ import rwilk.logindemo2.model.User;
 public interface ISpendService {
 
   /** TODO edit to get spending for user */
-  List<Spend> getSpending();
+  List<Spend> getSpending(String username);
 
   /** looks ok */
-  Spend addSpend(Spend spend);
+  Spend addSpend(String authorization, Spend spend);
 
   List<Spend> getSpending(User user);
+
+  void deleteSpending(String authorization, Long id);
+
+  Spend updateSpending(String authorization, Spend spend);
 }
