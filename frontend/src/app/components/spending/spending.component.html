@@ -1,4 +1,14 @@
-<mat-card xmlns:columns="http://www.w3.org/1999/xhtml">
+<!--<link href="node_modules/ng2-toastr/bundles/ng2-toastr.min.css" rel="stylesheet" />-->
+<!--<script src="node_modules/ng2-toastr/bundles/ng2-toastr.min.js"></script>-->
+<link rel="stylesheet" type="text/css"
+      href="https://npmcdn.com/angular2-toaster@6.1.0/toaster.css" />
+<!--<link rel="stylesheet" type="text/css" href="/node_modules/angular2-toaster/toaster.css" />-->
+<!--<link rel="stylesheet" type="text/css" href="/node_modules/angular2-toaster/toaster.min.css" />-->
+
+<!--<notifier-container></notifier-container>-->
+<toaster-container></toaster-container>
+
+<mat-card>
   <mat-card-subtitle>Add spend</mat-card-subtitle>
   <mat-card-content>
 
@@ -34,7 +44,7 @@
       </mat-form-field>
       <br>
 
-      <button type="reset" class="btn btn-secondary">Clear</button>
+      <button id="button-reset" type="reset" class="btn btn-secondary">Clear</button>
       <button type="submit" (click)="onSubmit()" class="btn btn-success">Add</button>
     </form>
 
@@ -47,27 +57,36 @@
   <mat-card-subtitle>Spending</mat-card-subtitle>
   <mat-card-content>
 
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
       <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header width="75">No.</th>
         <td mat-cell *matCellDef="let element">{{element.position}}</td>
       </ng-container>
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Name.</th>
-        <td mat-cell *matCellDef="let element" contenteditable="true">
-          <!--{{element.name}}-->
-          <input [readonly]="!element.isEditing" matInput value="{{element.name}}"
-                 (blur)="editSpendingName($event.target.value, element)" class="editableInput">
+        <td mat-cell *matCellDef="let element">
+          <ng-container *ngIf="!element.isEditing">
+            {{element.name}}
+          </ng-container>
+          <mat-form-field class="my-input" *ngIf="element.isEditing">
+          <input matInput value="{{element.name}}"
+                 (blur)="editSpendingName($event.target.value, element)">
+          </mat-form-field>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="value">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Value</th>
         <td mat-cell *matCellDef="let element">
-            <input [readonly]="!element.isEditing" matInput value="{{element.value}}"
-                   (blur)="editSpendingValue($event.target.value, element)" class="editableInput">
+          <ng-container *ngIf="!element.isEditing">
+            {{element.value}}
+          </ng-container>
+          <mat-form-field class="my-input" *ngIf="element.isEditing">
+          <input matInput value="{{element.value}}"
+                 (blur)="editSpendingValue($event.target.value, element)">
+          </mat-form-field>
         </td>
       </ng-container>
 
@@ -79,15 +98,19 @@
       </ng-container>
 
       <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
-        <td mat-cell *matCellDef="let element" contenteditable="false">
-          <!--{{element.date1 | date1 : "dd.MM.y"}}-->
-
-          <input matInput [matDatepicker]="picker" [(ngModel)]="element.date1" startDate>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker ></mat-datepicker>
-
-
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="my-th">Date</th>
+        <td mat-cell *matCellDef="let element" class="my-td">
+          <ng-container *ngIf="!element.isEditing">
+            {{element.date1 | date: "dd.MM.y"}}
+          </ng-container>
+          <mat-form-field class="my-input" *ngIf="element.isEditing">
+            <input matInput [matDatepicker]="picker1"
+                   [value]="element.date1" (dateChange)="editDateValue($event.target.value, element)"
+                   >
+            <!--(blur)="editSpendingDate($event.target.value, element)"-->
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
         </td>
       </ng-container>
 
@@ -97,8 +120,9 @@
           <button type="button" class="btn btn-primary" *ngIf="!element.isEditing" (click)="editElement(element)">Edit</button>
           <button type="button" class="btn btn-success" *ngIf="element.isEditing" (click)="saveEditElement(element)">Save</button>
 
-          <button type="button" class="btn btn-danger" *ngIf="!element.isEditing" (click)="deleteElement(element)">Delete</button>
-          <button type="button" class="btn btn-danger" *ngIf="element.isEditing" (click)="cancelEditElement(element)">Cancel</button>
+          <!--<button type="button" class="btn btn-danger" *ngIf="!element.isEditing" (click)="deleteElement(element)">Delete</button>-->
+          <button type="button" class="btn btn-danger" *ngIf="!element.isEditing" (click)="confirmDeleteDialog(element)">Delete</button>
+          <button type="button" class="btn btn-secondary" *ngIf="element.isEditing" (click)="cancelEditElement(element)">Cancel</button>
         </td>
       </ng-container>
 
@@ -110,7 +134,6 @@
 
 </mat-card>
 
-
-<p>
-  spending works!
-</p>
+<!--<input matInput [matDatepicker]="picker2" placeholder="Date" [value]="date2.value">-->
+<!--<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>-->
+<!--<mat-datepicker #picker2></mat-datepicker>-->

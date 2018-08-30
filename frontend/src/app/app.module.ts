@@ -12,8 +12,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {AppRoutingModule} from "./app-routing.module";
 import {
-  MAT_DATE_LOCALE,
-  MatCardModule, MatDatepickerModule, MatExpansionModule, MatFormFieldModule,
+  MAT_DATE_LOCALE, MatButtonModule,
+  MatCardModule, MatDatepickerModule, MatDialogModule, MatExpansionModule, MatFormFieldModule,
   MatIconModule, MatInputModule,
   MatListModule,
   MatMenuModule, MatNativeDateModule, MatSelectModule,
@@ -24,16 +24,18 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import {ProfileComponent} from './components/profile/profile.component';
 import {UserService} from "./services/user.service";
 import {CommonModule} from "@angular/common";
-import { NavigationMenuComponent } from './components/navigation-menu/navigation-menu.component';
+import {NavigationMenuComponent} from './components/navigation-menu/navigation-menu.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { MenuListItemComponent } from './components/menu-list-item/menu-list-item.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { SpendingComponent } from './components/spending/spending.component';
-import { CategoriesComponent } from './components/categories/categories.component';
+import {MenuListItemComponent} from './components/menu-list-item/menu-list-item.component';
+import {DashboardComponent} from './components/dashboard/dashboard.component';
+import {SpendingComponent} from './components/spending/spending.component';
+import {CategoriesComponent} from './components/categories/categories.component';
 import {SpendingService} from "./services/spending.service";
 import {NavigationMenuService} from "./services/navigation-menu.service";
 import {CategoryService} from "./services/category.service";
 import {ModuleService} from "./services/module.service";
+import {ToasterModule} from "angular2-toaster";
+import {DialogConfirmDeleteComponent} from './components/dialog-confirm-delete/dialog-confirm-delete.component';
 
 @NgModule({
   declarations: [
@@ -47,13 +49,19 @@ import {ModuleService} from "./services/module.service";
     MenuListItemComponent,
     DashboardComponent,
     SpendingComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    DialogConfirmDeleteComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    ToasterModule.forRoot(),
+    //ToastyModule.forRoot(),
+    //AdvGrowlModule,
+    // NotifierModule,
+    //ToastModule.forRoot(),
 
     BrowserAnimationsModule,
     MatToolbarModule,
@@ -72,11 +80,14 @@ import {ModuleService} from "./services/module.service";
     MatSortModule,
     MatTooltipModule,
     MatExpansionModule,
+    MatDialogModule,
+    MatButtonModule,
 
     FlexLayoutModule,
     ReactiveFormsModule,
     CommonModule
   ],
+  entryComponents: [DialogConfirmDeleteComponent],
   providers: [
     LoginService,
     RegisterService,

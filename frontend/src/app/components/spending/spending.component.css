@@ -16,6 +16,7 @@ table {
   table-layout: fixed;
 }
 
-.editableInput:read-write {
-  color: lightgray;
+.my-input {
+  /*background: lightgray;*/
+  max-width: 90%;
 }

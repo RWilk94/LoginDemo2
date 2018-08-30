@@ -6,8 +6,10 @@ import {CategoryService} from "../../services/category.service";
 import {SpendingService} from "../../services/spending.service";
 import {Cookie} from "ng2-cookies/ng2-cookies";
 import {User} from "../../models/user";
-import {MatSort, MatTableDataSource} from "@angular/material";
-import {CategoryElement} from "../categories/categories.component";
+import {MatDialog, MatSort, MatTableDataSource} from "@angular/material";
+import {Toast, ToasterService} from "angular2-toaster";
+import {DialogConfirmDeleteComponent} from "../dialog-confirm-delete/dialog-confirm-delete.component";
+import {ToastBuilder} from "../../models/toast-builder";
 
 @Component({
   selector: 'app-spending',
@@ -27,7 +29,9 @@ export class SpendingComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'value', 'category', 'date', 'options'];
   dataSource = new MatTableDataSource<SpendingElement>(this.createSpendingElements());
 
-  constructor(private formBuilder: FormBuilder, private spendingService: SpendingService, private categoryService: CategoryService) {
+  constructor(private formBuilder: FormBuilder, private spendingService: SpendingService, private categoryService: CategoryService,
+              /*private notifier: NotifierService*/
+              private toasterService: ToasterService, private dialog: MatDialog) {
     this.spend = new Spending();
 
     // TODO get home category only
@@ -75,6 +79,8 @@ export class SpendingComponent implements OnInit {
         this.spendingService.addSpending(this.spend).subscribe(data => {
           console.log('addSpending ' + JSON.stringify(this.spending));
           this.refresh();
+          this.displayToast(ToastBuilder.successAddItem());
+          document.getElementById('button-reset').click();
         }, error1 => console.log(error1));
       }
     }
@@ -89,11 +95,11 @@ export class SpendingComponent implements OnInit {
       element.name = this.spending[i].name;
       element.value = this.spending[i].value;
       element.category = this.spending[i].category.name;
-      element.date1 = this.spending[i].date;
-      //element.isEditing = false;
+      element.date1 = new Date(this.spending[i].date);
+      // element.date1 = new FormControl(new Date(this.spending[i].date));
       spendingElements.push(element);
     }
-    console.log('createSpendingElements ' +spendingElements);
+    console.log('createSpendingElements ' + spendingElements);
     return spendingElements;
   }
 
@@ -110,34 +116,100 @@ export class SpendingComponent implements OnInit {
   deleteElement(element: SpendingElement) {
     let spend = this.spending[element.position - 1];
     console.log('Spending: ' + JSON.stringify(spend));
-    this.spendingService.deleteSpending(spend).subscribe(data => this.refresh());
+    this.spendingService.deleteSpending(spend).subscribe(data => {
+      this.displayToast(ToastBuilder.successDeleteItem());
+      this.refresh()
+    });
   }
 
-
+  /** Edit name value after blur on input */
   editSpendingName(name: string, element: SpendingElement) {
+    console.log('editSpendingName');
     this.dataSource.data[element.position - 1].name = name;
   }
 
+  /** Edit value value after blur on input */
   editSpendingValue(value: number, element: SpendingElement) {
-
+    console.log('editSpendingValue');
+    this.dataSource.data[element.position - 1].value = value;
   }
 
+  /** Edit date value after changed value in input datepicker */
+  editDateValue(value: Date, element: SpendingElement) {
+    element.date1 = value;
+  }
 
-  editElement(element: SpendingElement){
+  /** Enable editing mode */
+  editElement(element: SpendingElement) {
     element.isEditing = true;
-    console.log(JSON.stringify(element));
-    //this.refresh();
   }
 
   saveEditElement(element: SpendingElement) {
+    // element.date1 = this.form.get('date1').value;
+    // console.log(element);
+    // console.log(JSON.stringify(element));
 
+    let spend = this.spending[element.position - 1];
+    spend.name = element.name;
+    spend.value = element.value;
+    // spend.date = element.date1;
+
+    let date = new Date();
+    date.setDate(element.date1.getDate());
+    date.setMonth(element.date1.getMonth());
+    date.setFullYear(element.date1.getFullYear());
+    spend.date = date;
+
+    console.log(spend);
+    this.spendingService.updateSpending(spend).subscribe(data => {
+      console.log(data);
+      this.displayToast(ToastBuilder.successUpdateItem());
+      element.isEditing = false;
+    }, error1 => console.log(error1));
   }
 
+  /** Cancel edit mode. Restore previous value and disable edit mode */
   cancelEditElement(element: SpendingElement) {
+    let originalRow = this.spending[element.position - 1];
+    this.dataSource.data[element.position - 1].name = originalRow.name;
+    this.dataSource.data[element.position - 1].value = originalRow.value;
+    this.dataSource.data[element.position - 1].date1 = new Date(originalRow.date);
+    element.isEditing = false;
+    //this.notifier.notify('success', 'message');
+    /*this.toasterService.pop('warning', 'Args Title', 'Args Body');
+    this.toasterService.pop('error', 'Args Title', 'Args Body');
+    this.toasterService.pop('success', 'Args Title', 'Args Body');
+    this.toasterService.pop('info', 'Args Title', 'Args Body');
+
+    var toast: ToastBuilder = {
+      type: 'success',
+      title: 'close cutton',
+      body: 'body',
+      showCloseButton: true,
+      timeout: 0
+    };
+
+    this.toasterService.pop(toast);*/
 
   }
 
+  /** Show confirm dialog after click on delete element button */
+  confirmDeleteDialog(element: SpendingElement): void {
+    console.log('confirmDeleteDialog');
+    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent, {
+      width: '250px'
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined && result === true) {
+        this.deleteElement(element);
+      }
+    });
+  }
+
+  private displayToast(toast: Toast): void {
+    this.toasterService.pop(toast);
+  }
 }
 
 export class SpendingElement {
@@ -146,5 +218,6 @@ export class SpendingElement {
   value: number;
   category: string;
   date1: Date;
+  //  date1: FormControl = new FormControl(new Date());
   isEditing: boolean;
 }
