@@ -9,7 +9,7 @@ export class ToastBuilder {
   static successDeleteItem(): Toast {
     return {
       type: 'success',
-      title: 'Item deleted successfully.',
+      title: 'Item deleted successfully',
       body: ''
     };
   }
@@ -30,5 +30,36 @@ export class ToastBuilder {
     };
   }
 
+  static errorEmptyName() : Toast {
+    return {
+      type: 'error',
+      title: 'Name can not be empty',
+      body: ''
+    };
+  }
+
+  static errorEmptyValue() : Toast {
+    return {
+      type: 'error',
+      title: 'Value can not be empty',
+      body: ''
+    };
+  }
+
+  static errorEmptyCategory() : Toast {
+    return {
+      type: 'error',
+      title: 'Category can not be empty',
+      body: ''
+    };
+  }
+
+  static errorEmptyDate() : Toast {
+    return {
+      type: 'error',
+      title: 'Date can not be empty',
+      body: ''
+    };
+  }
 
 }

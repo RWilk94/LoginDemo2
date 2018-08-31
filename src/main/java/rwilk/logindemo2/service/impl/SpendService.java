@@ -60,13 +60,16 @@ public class SpendService implements ISpendService {
   @Override
   public Spend updateSpending(String authorization, Spend spend) {
     Spend newSpend = spendRepository.findById(spend.getId()).get();
+    Category category = categoryRepository.findById(spend.getCategory().getId()).get();
     if (newSpend.getUser() != null
         && spend.getUser().getUsername() != null
-        && spend.getUser().getUsername().equals(authorization)) {
+        && spend.getUser().getUsername().equals(authorization)
+        && (category.getUser() == null || category.getUser().getUsername().equals(authorization))) {
 
       newSpend.setName(spend.getName());
       newSpend.setValue(spend.getValue());
       newSpend.setDate(spend.getDate());
+      newSpend.setCategory(category);
       return spendRepository.save(newSpend);
     }
     return null;

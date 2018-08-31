@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {LoginService} from "../../services/login.service";
 import {Router} from "@angular/router";
 import {NavigationMenuService} from "../../services/navigation-menu.service";
-import {b} from "@angular/core/src/render3";
 
 @Component({
   selector: 'app-nav-bar',

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {Category} from "../../models/category";
 import {Spending} from "../../models/spending";
@@ -16,7 +16,7 @@ import {ToastBuilder} from "../../models/toast-builder";
   templateUrl: './spending.component.html',
   styleUrls: ['./spending.component.css']
 })
-export class SpendingComponent implements OnInit {
+export class SpendingComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -51,6 +51,22 @@ export class SpendingComponent implements OnInit {
       category: new FormControl(this.spend.category),
       date: new FormControl(this.spend.date)
     });
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'category': {
+          return item.category.name;
+        }
+        case 'date': {
+          return new Date(item.date1);
+        }
+        default: {
+          return item[property];
+        }
+      }
+    };
   }
 
   onSubmit() {
@@ -94,7 +110,7 @@ export class SpendingComponent implements OnInit {
       element.position = i + 1;
       element.name = this.spending[i].name;
       element.value = this.spending[i].value;
-      element.category = this.spending[i].category.name;
+      element.category = this.spending[i].category;
       element.date1 = new Date(this.spending[i].date);
       // element.date1 = new FormControl(new Date(this.spending[i].date));
       spendingElements.push(element);
@@ -110,6 +126,7 @@ export class SpendingComponent implements OnInit {
       this.spending = data;
       this.dataSource = new MatTableDataSource<SpendingElement>(this.createSpendingElements());
       this.dataSource.sort = this.sort;
+      this.ngAfterViewInit();
     })
   }
 
@@ -142,17 +159,24 @@ export class SpendingComponent implements OnInit {
   /** Enable editing mode */
   editElement(element: SpendingElement) {
     element.isEditing = true;
+    console.log('category: ' + JSON.stringify(element.category));
   }
 
-  saveEditElement(element: SpendingElement) {
-    // element.date1 = this.form.get('date1').value;
-    // console.log(element);
-    // console.log(JSON.stringify(element));
+  /** Compare categories when edit spending record */
+  compareCategories(o1: Category, o2: Category): boolean {
+    // console.log(JSON.stringify(o1) + ' vs ' + JSON.stringify(o2));
+    return o1.name === o2.name && o1.id === o2.id && o1.module.id === o2.module.id;
+  }
 
+  /** This method save the spending object after edit */
+  saveEditElement(element: SpendingElement) {
+    if (!this.checkElement(element)) {
+      return;
+    }
     let spend = this.spending[element.position - 1];
     spend.name = element.name;
     spend.value = element.value;
-    // spend.date = element.date1;
+    spend.category = element.category;
 
     let date = new Date();
     date.setDate(element.date1.getDate());
@@ -175,22 +199,6 @@ export class SpendingComponent implements OnInit {
     this.dataSource.data[element.position - 1].value = originalRow.value;
     this.dataSource.data[element.position - 1].date1 = new Date(originalRow.date);
     element.isEditing = false;
-    //this.notifier.notify('success', 'message');
-    /*this.toasterService.pop('warning', 'Args Title', 'Args Body');
-    this.toasterService.pop('error', 'Args Title', 'Args Body');
-    this.toasterService.pop('success', 'Args Title', 'Args Body');
-    this.toasterService.pop('info', 'Args Title', 'Args Body');
-
-    var toast: ToastBuilder = {
-      type: 'success',
-      title: 'close cutton',
-      body: 'body',
-      showCloseButton: true,
-      timeout: 0
-    };
-
-    this.toasterService.pop(toast);*/
-
   }
 
   /** Show confirm dialog after click on delete element button */
@@ -207,8 +215,27 @@ export class SpendingComponent implements OnInit {
     });
   }
 
+  /** Method used to display toast object on screen */
   private displayToast(toast: Toast): void {
     this.toasterService.pop(toast);
+  }
+
+  /** Method check if the SpendingElement from the table is a correct object. */
+  private checkElement(element: SpendingElement): boolean {
+    if (element.name === null || element.name === undefined || element.name.length === 0) {
+      this.displayToast(ToastBuilder.errorEmptyName());
+      return false;
+    } else if (element.value === null || element.value === undefined || isNaN(element.value)) {
+      this.displayToast(ToastBuilder.errorEmptyValue());
+      return false;
+    } else if (element.category === null || element.category === undefined) {
+      this.displayToast(ToastBuilder.errorEmptyCategory());
+      return false;
+    } else if (element.date1 === null || element.date1 === undefined) {
+      this.displayToast(ToastBuilder.errorEmptyDate());
+      return false;
+    }
+    return true;
   }
 }
 
@@ -216,7 +243,7 @@ export class SpendingElement {
   position: number;
   name: string;
   value: number;
-  category: string;
+  category: Category;
   date1: Date;
   //  date1: FormControl = new FormControl(new Date());
   isEditing: boolean;

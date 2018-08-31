@@ -9,5 +9,4 @@ export class Spending {
   public date: Date;
   public value: number;
   public user: User;
-
 }
