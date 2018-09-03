@@ -24,6 +24,11 @@ export class NavigationMenuComponent implements OnInit, AfterViewInit {
       iconName: 'home',
       children: [
         {
+          displayName: 'Overview',
+          iconName: 'explore',
+          route: 'home-overview'
+        },
+        {
           displayName: 'Spending',
           iconName: 'money',
           route: 'spending'

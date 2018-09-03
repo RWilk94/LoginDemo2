@@ -67,6 +67,13 @@ export class SpendingComponent implements OnInit, AfterViewInit {
         }
       }
     };
+
+    this.dataSource.filterPredicate =
+      (data: SpendingElement, filter: string) =>
+        data.name.includes(filter)
+        || data.value.toString().includes(filter)
+        || data.category.name.includes(filter)
+        || data.date1.toLocaleDateString().includes(filter);
   }
 
   onSubmit() {
@@ -165,7 +172,9 @@ export class SpendingComponent implements OnInit, AfterViewInit {
   /** Compare categories when edit spending record */
   compareCategories(o1: Category, o2: Category): boolean {
     // console.log(JSON.stringify(o1) + ' vs ' + JSON.stringify(o2));
-    return o1.name === o2.name && o1.id === o2.id && o1.module.id === o2.module.id;
+    if (o1 !== undefined && o2 !== undefined) {
+      return o1.name === o2.name && o1.id === o2.id && o1.module.id === o2.module.id;
+    }
   }
 
   /** This method save the spending object after edit */
@@ -222,6 +231,7 @@ export class SpendingComponent implements OnInit, AfterViewInit {
 
   /** Method check if the SpendingElement from the table is a correct object. */
   private checkElement(element: SpendingElement): boolean {
+    console.log('checkElement ' + JSON.stringify(element));
     if (element.name === null || element.name === undefined || element.name.length === 0) {
       this.displayToast(ToastBuilder.errorEmptyName());
       return false;
@@ -237,6 +247,85 @@ export class SpendingComponent implements OnInit, AfterViewInit {
     }
     return true;
   }
+
+  addRecord() {
+    // create new element
+    let spendingElement: SpendingElement = new SpendingElement();
+    spendingElement.isEditing = true;
+    spendingElement.isNew = true;
+    spendingElement.position = this.dataSource.data.length + 1;
+
+    // check if template was added
+    let numberOfNewRows = 0;
+    this.dataSource.data.forEach(element => {
+      if (element.isNew === true) {
+        numberOfNewRows++;
+      }
+    });
+    if (numberOfNewRows === 0) {
+      // add new element to table
+      let dataSource = this.dataSource.data;
+      dataSource.push(spendingElement);
+      this.dataSource.data = dataSource;
+
+      // scroll to bottom of spending table
+      let element = document.getElementById('tableSpending');
+      element.scrollIntoView(false);
+
+    } else {
+      this.displayToast(ToastBuilder.warningTemplateForRecordAlreadyAdded());
+    }
+  }
+
+  cancelAddElement() {
+    let dataSource: SpendingElement[] = [];
+    this.dataSource.data.forEach(element => {
+      if (!element.isNew) {
+        dataSource.push(element);
+      }
+    });
+    this.dataSource.data = dataSource;
+  }
+
+  addElement(element) {
+    if (!this.checkElement(element)) {
+      return;
+    }
+
+    let spend = new Spending();
+    spend.name = element.name;
+    spend.value = element.value;
+    spend.category = element.category;
+
+    let date = new Date();
+    date.setDate(element.date1.getDate());
+    date.setMonth(element.date1.getMonth());
+    date.setFullYear(element.date1.getFullYear());
+    spend.date = date;
+
+    let username = Cookie.get('username');
+    if (username !== null) {
+      let user: User = new User();
+      user.username = username;
+      spend.user = user;
+
+      this.spendingService.addSpending(spend).subscribe(data => {
+        this.displayToast(ToastBuilder.successAddItem());
+        element.isEditing = false; // disable editing mode
+        element.isNew = false;
+        this.spending.push(data); // add current spend to spending array
+        this.addRecord();
+        // console.log(data);
+      }, error1 => {
+        this.displayToast(ToastBuilder.errorWhileAddingItem());
+        console.log(error1)
+      });
+    }
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }
 
 export class SpendingElement {
@@ -247,4 +336,5 @@ export class SpendingElement {
   date1: Date;
   //  date1: FormControl = new FormControl(new Date());
   isEditing: boolean;
+  isNew: boolean;
 }

@@ -36,6 +36,7 @@ import {CategoryService} from "./services/category.service";
 import {ModuleService} from "./services/module.service";
 import {ToasterModule} from "angular2-toaster";
 import {DialogConfirmDeleteComponent} from './components/dialog-confirm-delete/dialog-confirm-delete.component';
+import { HomeOverviewComponent } from './components/home-overview/home-overview.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import {DialogConfirmDeleteComponent} from './components/dialog-confirm-delete/d
     DashboardComponent,
     SpendingComponent,
     CategoriesComponent,
-    DialogConfirmDeleteComponent
+    DialogConfirmDeleteComponent,
+    HomeOverviewComponent
   ],
   imports: [
     AppRoutingModule,

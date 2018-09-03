@@ -22,6 +22,14 @@ export class ToastBuilder {
     };
   }
 
+  static errorWhileAddingItem() : Toast {
+    return {
+      type: 'error',
+      title: 'Error while adding item',
+      body: ''
+    };
+  }
+
   static successUpdateItem(): Toast {
     return {
       type: 'success',
@@ -61,5 +69,15 @@ export class ToastBuilder {
       body: ''
     };
   }
+
+  static warningTemplateForRecordAlreadyAdded() : Toast {
+    return {
+      type: 'warning',
+      title: 'Template for the record already added',
+      body: ''
+    };
+  }
+
+
 
 }

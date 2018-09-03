@@ -50,7 +50,14 @@
   <mat-card-subtitle>Spending</mat-card-subtitle>
   <mat-card-content>
 
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <button type="button" class="btn btn-success" (click)="addRecord()">Add record</button>
+
+    <br>
+    <mat-form-field class="filter-field">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+
+    <table id="tableSpending" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
       <ng-container matColumnDef="position">
         <th mat-header-cell *matHeaderCellDef mat-sort-header width="75">No.</th>
@@ -122,11 +129,13 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Options</th>
         <td mat-cell *matCellDef="let element">
           <button type="button" class="btn btn-primary" *ngIf="!element.isEditing" (click)="editElement(element)">Edit</button>
-          <button type="button" class="btn btn-success" *ngIf="element.isEditing" (click)="saveEditElement(element)">Save</button>
+          <button type="button" class="btn btn-success" *ngIf="element.isEditing && !element.isNew" (click)="saveEditElement(element)">Save</button>
+          <button type="button" class="btn btn-success" *ngIf="element.isEditing && element.isNew" (click)="addElement(element)">Add</button>
 
           <!--<button type="button" class="btn btn-danger" *ngIf="!element.isEditing" (click)="deleteElement(element)">Delete</button>-->
           <button type="button" class="btn btn-danger" *ngIf="!element.isEditing" (click)="confirmDeleteDialog(element)">Delete</button>
-          <button type="button" class="btn btn-secondary" *ngIf="element.isEditing" (click)="cancelEditElement(element)">Cancel</button>
+          <button type="button" class="btn btn-secondary" *ngIf="element.isEditing && !element.isNew" (click)="cancelEditElement(element)">Cancel</button>
+          <button type="button" class="btn btn-secondary" *ngIf="element.isEditing && element.isNew" (click)="cancelAddElement()">Cancel</button>
         </td>
       </ng-container>
 

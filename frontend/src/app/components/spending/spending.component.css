@@ -20,3 +20,7 @@ table {
   /*background: lightgray;*/
   max-width: 90%;
 }
+
+.filter-field {
+  width: 100%;
+}
